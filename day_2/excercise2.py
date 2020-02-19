@@ -21,6 +21,8 @@ add(2,2,3)
 add(6,2,3)
 add(10,2,3)
 
+"""Another function starts here"""
+
 x = int(input('Enter number x : '))
 y = int(input('Enter number y : '))
 
