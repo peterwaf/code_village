@@ -11,7 +11,7 @@ def tellStory():
     addFav('city',myFavs)
     story = myStory.format(**myFavs)
     print(story)
-
+    
 def addFav(kavar,myFavs):
     """This allows user input"""
     prompt = 'Enter name of ' +kavar +":"
