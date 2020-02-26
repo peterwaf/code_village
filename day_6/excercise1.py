@@ -6,6 +6,30 @@ numberOfSubjects = 0
 studentSubject = ''
 studentScore = 0
 
+def gradingSystem(marks):
+    if (marks >=80 and marks <=100):
+        return 'A'
+    elif(marks >=60 and marks<80):
+        return 'B'
+    elif(marks>40 and marks<60):
+        return 'C'
+    elif(marks<40):
+        return 'D'
+    else:
+        return 'Invalid Grade'
+    
+def getMean(score,numberSubjects):
+    return score/numberSubjects
+
+""""
+def printReport(k,v):
+    the_sum = 0
+    for k,v in all_scores.items():
+        the_sum += v
+        print('{} Grade : {}'.format(k,gradingSystem(v)))
+    print('The mean Grade is {}'.format(getMean(the_sum,numberSubjects)))                  
+"""
+                             
 def studentInfo(numberOfStudents,studentName,studentRegistrationNumber,studentClass,numberOfSubjects,studentSubject,studentScore):
     numberOfStudents = int(input('Enter Number of students :'))
     if numberOfStudents > 0:
@@ -27,32 +51,22 @@ def studentInfo(numberOfStudents,studentName,studentRegistrationNumber,studentCl
                     studentData[studentSubject] = studentScore
                     temporaryStudentData['scores'] = studentData
             allStudentDetails[studentRegistrationNumber] = temporaryStudentData
-    print(allStudentDetails)
+    return allStudentDetails
+
+students = studentInfo(numberOfStudents,studentName,studentRegistrationNumber,studentClass,numberOfSubjects,studentSubject,studentScore)                  
+
+print('******** Report Card ********************')
+for k,v in students.items():
+    print('Name :',v['Name'])
+    print('Registration Number :',k)
+    print('Class :',v['Class'])
+    totalMarks = 0
+    for subject,score in v['scores'].items():
+        totalMarks += score
+        print(subject,score,'Grade :',gradingSystem(score))
+        
+    print('Mean Score : ',getMean(totalMarks,len(v['scores'])))
+    print('Mean Grade : ',gradingSystem(getMean(totalMarks,len(v['scores']))))
     
-studentInfo(numberOfStudents,studentName,studentRegistrationNumber,studentClass,numberOfSubjects,studentSubject,studentScore)                    
-"""
-use below functions with above input 
-
-def gradingSystem(marks):
-    if (marks >=80 and marks <=100):
-        return 'A'
-    elif(marks >=60 and marks<80):
-        return 'B'
-    elif(marks>40 and marks<60):
-        return 'C'
-    elif(marks<40):
-        return 'D'
-    else:
-        return 'Invalid Grade'
-
-def getMean(score,numberSubjects):
-    return score/numberSubjects
-
-def printReport(k,v):
-    the_sum = 0
-    for k,v in all_scores.items():
-        the_sum += v
-        print('{} Grade : {}'.format(k,gradingSystem(v)))
-    print('The mean Grade is {}'.format(getMean(the_sum,numberSubjects)))                  
-                   
-   """                
+    """Get mean score for the school"""
+    """Get mean grade for the school"""
