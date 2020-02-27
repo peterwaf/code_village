@@ -1,10 +1,35 @@
-class_scores = {'0101': {'Name': 'mathew', 'Class': '1', 'scores': {'english': 45, 'maths': 98}}, '4875': {'Name': 'john', 'Class': '1', 'scores': {'geography': 56}}}
-allStudentScores = 0
-allStudentScoresCounter = 0
-for a,y in class_scores.items():
-    print(y['scores'])
-    allStudentScoresCounter += len(y['scores'])
-    for k,v in y['scores'].items():
-        allStudentScores += v
-print(allStudentScores)
-print(allStudentScoresCounter)
+customers = {
+	54856: {
+		'First Name ': 'Peter',
+		'Last Name ': 'Wafula',
+		'Mobile No. ': 722412676,
+		'Id Number': 287856,
+		'Unique Id': 54856,
+		'Account': {
+			'Account Number': 1147896545,
+			'Account Type': 'Current',
+			'Currency': 'KES',
+			'Currency Name': 'Kenya shillings',
+			'Account Balance': 10000
+		}
+	},
+	984562: {
+		'First Name ': 'John',
+		'Last Name ': 'Kissinger',
+		'Mobile No. ': 74574548,
+		'Id Number': 28795462,
+		'Unique Id': 984562,
+		'Account': {
+			'Account Number': 14759856,
+			'Account Type': 'Savings',
+			'Currency': 'USD',
+			'Currency Name': 'Kenya shillings',
+			'Account Balance': 1000
+		}
+	}
+}
+
+for a,b in customers.items():
+    print('Customer Id',a)
+    for c,d in b.items():
+        print(c,d)
