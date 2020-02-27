@@ -78,7 +78,7 @@ for k,v in students.items():
 print('The Mean Score for the school is : {}'.format(getMean(allStudentScores,allStudentSubjectsCounter)))
 print('The Mean Grade for the school is : {}'.format(gradingSystem(getMean(allStudentScores,allStudentSubjectsCounter))))
 
+print('******** Report Card End*********')
 
 """Get mean score for the school"""
 """Get mean grade for the school"""   
-print('******** Report Card End*********')
