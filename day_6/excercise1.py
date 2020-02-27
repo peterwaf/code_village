@@ -73,7 +73,7 @@ for k,v in students.items():
     print('Mean Score : ',getMean(totalMarks,len(v['scores'])))
     print('Mean Grade : ',gradingSystem(getMean(totalMarks,len(v['scores']))))
     
-#getting the mean score and mean grade for the school
+#printing the mean score and mean grade for the school
 
 print('The Mean Score for the school is : {}'.format(getMean(allStudentScores,allStudentSubjectsCounter)))
 print('The Mean Grade for the school is : {}'.format(gradingSystem(getMean(allStudentScores,allStudentSubjectsCounter))))
