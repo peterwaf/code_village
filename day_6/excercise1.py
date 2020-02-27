@@ -11,7 +11,7 @@ def gradingSystem(marks):
         return 'A'
     elif(marks >=60 and marks<80):
         return 'B'
-    elif(marks>40 and marks<60):
+    elif(marks>=40 and marks<60):
         return 'C'
     elif(marks<40):
         return 'D'
@@ -55,18 +55,30 @@ def studentInfo(numberOfStudents,studentName,studentRegistrationNumber,studentCl
 
 students = studentInfo(numberOfStudents,studentName,studentRegistrationNumber,studentClass,numberOfSubjects,studentSubject,studentScore)                  
 
-print('******** Report Card ********************')
+print('******** Report Card Start*******')
+
+allStudentScores = 0
+allStudentSubjectsCounter = 0
+
 for k,v in students.items():
     print('Name :',v['Name'])
     print('Registration Number :',k)
     print('Class :',v['Class'])
     totalMarks = 0
+    allStudentSubjectsCounter += len(v['scores'])
     for subject,score in v['scores'].items():
         totalMarks += score
+        allStudentScores += score
         print(subject,score,'Grade :',gradingSystem(score))
-        
     print('Mean Score : ',getMean(totalMarks,len(v['scores'])))
     print('Mean Grade : ',gradingSystem(getMean(totalMarks,len(v['scores']))))
     
-    """Get mean score for the school"""
-    """Get mean grade for the school"""
+#getting the mean score and mean grade for the school
+
+print('The Mean Score for the school is : {}'.format(getMean(allStudentScores,allStudentSubjectsCounter)))
+print('The Mean Grade for the school is : {}'.format(gradingSystem(getMean(allStudentScores,allStudentSubjectsCounter))))
+
+
+"""Get mean score for the school"""
+"""Get mean grade for the school"""   
+print('******** Report Card End*********')
