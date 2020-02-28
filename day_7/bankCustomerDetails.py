@@ -1,3 +1,24 @@
+"""
+The bank requires a system to manage the customers and their accounts.
+The system should allow a bank user to input details of a customer, their account details and balances.
+Customer details to be captured are
+    1.    First name
+    2.    Last name
+    3.    Mobile number
+    4.    ID number
+    5.    Unique Customer  
+    6.    Account
+The account has the following properties:
+    1.    Account Number
+    2.    Account Type (current, savings)
+    3.    Currency
+    4.    Account Balance
+Currency has the following properties
+    1.    Currency code (KES, USD)
+    2.    Currency Name (Kenya shillings)
+The requirement is to build a python program that will capture this information for many customers and out put the details
+
+"""
 customers = dict()
 starter = input('Would you like to add a new customer account? Press 1 for Yes or 2 for No :')
 
@@ -39,6 +60,7 @@ while (starter == '1'):
     accountsInfo['Account Balance'] = int(input('Enter Account Balance :'))
     accountsInfo['Currency'] = accountsCurrencyDetails
     customer['Account'] = accountsInfo
+    #saving all data using customer id
     customers[uniqueCustomerId] = customer
     
     """The account has the following properties:
@@ -50,18 +72,20 @@ while (starter == '1'):
 
 print('Thank you !')
 
-print('====customer Data=====')
-
+print('===================customers Data=====================')
+#obtaining and printng the customers data
 for x,y in customers.items():
     print('Customer Id : {}'.format(x))
     print('Name :',y['First Name'],y['Last Name'])
     print('Mobile No :',y['Mobile No'])
     print('Id Number :',y['Id Number'])
     print('Unique Customer Id :',y['Unique Id'])
+    #obtaining the account dict items
     currency_holder = y['Account']
     print('Account Number : ',currency_holder['Account Number'])
     print('Account Type :',currency_holder['Account Type'])
     print('Account Balance :',currency_holder['Account Balance'])
+    #obtaining the currency dict items
     currencyCodeHolder = currency_holder['Currency']
     print('Currency Code :',currencyCodeHolder['Currency Code'])
     print('Currency Name :',currencyCodeHolder['Currency Name'])
