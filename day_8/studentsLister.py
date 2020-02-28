@@ -7,12 +7,13 @@ def studentsAdder(studentName):
     students = []
     name = input('Enter name of student :')
     students.append(name)
-    question = input('Do you want to add more names ? select : 1 for yes or 2 for no :')
+    question = input('Add more names ? Press : 1 => YES or 2 => NO :')
     while question == '1':
         name = input('Enter name of student :')
         students.append(name)
-        question = input('Do you want to add more names ? select : 1 for yes or 2 for no :')
+        question = input('Add more names ? Press : 1 => YES or 2 => NO :')
+    print('====Student Names ====')
     for x in students:
-        print(x)
+        print(x.capitalize())
         
 studentsAdder(studentName)
