@@ -1,15 +1,14 @@
 """function that returns true if 007 in order"""
 class Dog:
-    """a simple attempt to crate a dog model"""
-    def __init__(self,name,age):
+    species = 'mamals'
+    
+    def __init__(self,breed,name,spots):
+        self.breed =  breed
         self.name = name
-        self.age = age
-    
-    def sit(self):
-        print('The {} is now sitting'.format(self.name))
-    
-    def rollOver(self):
-        print('The {} is now rolling over'.format(self.name))
+        self.spots = spots
+        
+    def bark(self,number):
+        print('Woof ! my name is {} and I bark {} times'.format(self.name,number))
 
-jack = Dog('Jack',18)
-jack.sit()
+max = Dog('German Shephered','Maxi','DOtted')
+print(max.bark(5))
