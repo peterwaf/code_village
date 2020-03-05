@@ -27,6 +27,11 @@ class Germanshep(Dog):
         print('German sleeps like a carmel ')
         
 class Bulldog(Dog):
+    def __init__(self,color,name,age,sound,food,size): #adding extra properties
+        super().__init__(color,name,age,sound,food) #just a statement , not a function
+        self.size = size
+            
+    
     
     def walk(self,walkingStyle):
         self.walkingStyle = walkingStyle
@@ -41,7 +46,9 @@ class Jackal(Dog):
 germanShepheded = Germanshep('Red','Tom',5,'Wooh','Bigbones')
 germanShepheded.bark()
 germanShepheded.sleep()
-bullDog = Bulldog('Green','Scooby',8,'Whoogrrrr','Goat Bones')
+bullDog = Bulldog('Green','Scooby',8,'Whoogrrrr','Goat Bones',8)
+print('Number of pupies :',bullDog.size)
+
 print(bullDog.name)
 bullDog.walk('Tiktak')
 jackal = Jackal('Grey','Mr Nice',3,'Whu whu','Zebra Bones')
@@ -53,3 +60,6 @@ Pets.dogs = mydog_list
 print('=== My pets are ====')
 for dog in Pets.dogs:
     print('Name :',dog.name,'age :',dog.age,'Food :',dog.food)
+    
+print('====')
+
