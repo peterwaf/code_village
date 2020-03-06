@@ -1,3 +1,4 @@
+import math
 from student_class import Student
 from student_school import School
 from student_subjects import Subject
@@ -32,7 +33,13 @@ for a in allstudents:
     print('Student Registration No : ',a.regNumber)
     print('School Name :',a.school.schoolname)
     print('School Address :',a.school.schoolAddress)
+    subject_scores = []
     for the_subject in a.subjects:
         print('Subject Name :',the_subject.subjectName)
         print('Subject Score :',the_subject.subjectScore)
+        subject_scores.append(the_subject.subjectScore)
         print('Grade :',gradingSystem(the_subject.subjectScore))
+    sum_of_subjects = sum(subject_scores)
+    num_of_subjects = len(subject_scores)
+    print('Mean Score {} '.format(getMean(sum_of_subjects,num_of_subjects)))
+    print('Mean Grade {}'.format(gradingSystem(getMean(sum_of_subjects,num_of_subjects))))
