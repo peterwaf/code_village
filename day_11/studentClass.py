@@ -1,11 +1,22 @@
-from student_class import Student
-from student_school import School
-from student_subjects import Subject
-from grading_system import gradingSystem
-from get_mean import getMean
+class Student(): #student class
+    def __init__(self,name,regNumber,school,subjects):
+        self.name = name
+        self.regNumber = regNumber
+        self.school = school
+        self.subjects = subjects
+
+class School: #school class
+    def __init__(self,schoolname,schoolAddress):
+        self.schoolname = schoolname
+        self.schoolAddress = schoolAddress
+         
+class Subject:#subject class
+    def __init__(self,subjectName,subjectScore):
+        self.subjectName = subjectName
+        self.subjectScore = subjectScore
 
 allstudents = [] #for storing all student objects in a list
-
+ 
 NoOfstudents = int(input('Enter number of students :'))
 for x in range(0,NoOfstudents):
     name = input('Enter student name :')
@@ -35,4 +46,16 @@ for a in allstudents:
     for the_subject in a.subjects:
         print('Subject Name :',the_subject.subjectName)
         print('Subject Score :',the_subject.subjectScore)
-        print('Grade :',gradingSystem(the_subject.subjectScore))
+
+            
+
+    
+      
+
+
+   
+
+
+
+
+

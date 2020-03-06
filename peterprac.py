@@ -1,14 +1,33 @@
-"""function that returns true if 007 in order"""
-class Dog:
-    species = 'mamals'
-    
-    def __init__(self,breed,name,spots):
-        self.breed =  breed
+class Car:
+    allcars = []
+    numOfLegs = 4
+    def __init__(self,name,model,year,color):
         self.name = name
-        self.spots = spots
+        self.model = model
+        self.year = year
+        self.color = color
         
-    def bark(self,number):
-        print('Woof ! my name is {} and I bark {} times'.format(self.name,number))
+        
+    def getDetails(self):
+        print('The name of the car is {}'.format(self.name))
+        print('The name of the car is {}'.format(self.model))
+        print('The name of the car is {}'.format(self.year))
+        print('The name of the car is {}'.format(self.color))
 
-max = Dog('German Shephered','Maxi','DOtted')
-print(max.bark(5))
+class Toyota(Car):
+    def __init__(self,name,model,year,color,owners):
+        super().__init__(name,model,year,color)
+        self.owners = owners
+        
+    def getOwner(self):
+        print('The owner is called {} '.format(self.owners))
+        
+mytoyota = Toyota('Toyota','Corolla',2008,'red','Peter')
+teachertoyota = Toyota('Toyota','Auris',2020,'Grey','Stanley')
+mytoyota.getDetails()
+mytoyota.getOwner()
+teachertoyota.getDetails()
+teachertoyota.getOwner()
+listofcars = []
+listofcars.append(mytoyota)
+listofcars.append(teachertoyota)

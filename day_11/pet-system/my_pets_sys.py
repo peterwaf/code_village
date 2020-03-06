@@ -12,7 +12,7 @@ germanShepheded.sleep()
 
 #bulldog
 
-bullDog = Bulldog('Green','Scooby',8,'Whoogrrrr','Goat Bones',8)
+bullDog = Bulldog('Green','Scooby',7,'Whoogrrrr','Goat Bones',8)
 print('Number of pupies for bulldog :',bullDog.size)
 print('The bulldog\'s name is',bullDog.name)
 bullDog.walk('Tiktak')
