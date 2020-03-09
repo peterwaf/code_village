@@ -29,19 +29,20 @@ elif (user_input == 2):
     
     receipientPhoneNumber = int(input('Enter the recepient number :'))
     amount = int(input('Enter Amount to send :'))
-    print('You are about to send amount :{} to {} of Phone Number {} , Enter your Pin to send :'.format(amount,receiver.name,receipientPhoneNumber))
-    user_pin = int(input('Enter Pin :'))
-    
-    for customer_info in customers:
-        if (user_pin == sender.Pin and receipientPhoneNumber == receiver.mobileNo):
-            receiver.account.accountBalance += amount
-            sender.account.accountBalance -= amount
-            print('Dear {} , {} sent to {} of phone number {} , your balance is {}'.format(sender.name,amount,receiver.name,receiver.mobileNo,sender.account.accountBalance))
-            print('Dear {} , you have received {} from {} of {}, your new balance is {}'.format(receiver.name,amount,sender.name,sender.mobileNo,receiver.account.accountBalance))
-        else:
-            print('Invalid Pin or Phone Number , Try again')
-        break
-
+    if amount > sender.account.accountBalance:
+        print('You have insufficient funds.Please top up.')
+    else:
+        print('You are about to send amount :{} to {} of Phone Number {} , Enter your Pin to send :'.format(amount,receiver.name,receipientPhoneNumber))
+        user_pin = int(input('Enter Pin :'))
+        for customer_info in customers:
+            if (user_pin == sender.Pin and receipientPhoneNumber == receiver.mobileNo):
+                receiver.account.accountBalance += amount
+                sender.account.accountBalance -= amount
+                print('Dear {} , {} sent to {} of phone number {} , your balance is {}'.format(sender.name,amount,receiver.name,receiver.mobileNo,sender.account.accountBalance))
+                print('Dear {} , you have received {} from {} of {}, your new balance is {}'.format(receiver.name,amount,sender.name,sender.mobileNo,receiver.account.accountBalance))
+            else:
+                print('Invalid Pin or Phone Number , Try again')
+            break
 elif(user_input == 0):
     exit()
     
