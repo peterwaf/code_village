@@ -4,16 +4,24 @@ from student_school import School
 from student_subjects import Subject
 from grading_system import gradingSystem
 from get_mean import getMean
-
+from mysql_function import myDatabaseConnector
+connection = myDatabaseConnector()
+cursor = connection.cursor()
 allstudents = [] #for storing all student objects in a list
 
 NoOfstudents = int(input('Enter number of students :'))
 for x in range(0,NoOfstudents):
     name = input('Enter student name :')
     regNumber = int(input('Enter registration number :'))
+    schoolId = input('Enter school id :')
+    cursor.execute("insert into students(name,regNo,school_id) values (%s,%s,%s);",(name,regNumber,schoolId))
+    connection.commit()
     schoolname = input('Enter school name :')
     schoolAddress = input('Enter school schoolAddress :')
-    school = School(schoolname,schoolAddress)
+    schoolCode = input('Enter school code :')
+    school = School(schoolname,schoolAddress,schoolCode)
+    cursor.execute("insert into schools(code,name,address) values (%s,%s,%s);",(schoolCode,schoolname,schoolAddress))
+    connection.commit()
     NoOfsubjects = int(input('Enter number of subjects :'))
     
     subjects = [] #for storing subject objects in a list
@@ -21,8 +29,11 @@ for x in range(0,NoOfstudents):
     for subject in range(0,NoOfsubjects):
         subjectName = input('Enter subject name :')
         subjectScore = int(input('Enter subject score :'))
-        subject = Subject(subjectName,subjectScore)
-        subjects.append(subject) # append subject object to subjects
+        subject_id = int(input('Enter subject id;'))
+        cursor.execute("insert into subjects(subjectName,subjectScore,subject_id) values (%s,%s,%s);",(subjectName,subjectScore,subject_id))
+        connection.commit()
+        
+        
     one_student = Student(name,regNumber,school,subjects)
     allstudents.append(one_student)
     
