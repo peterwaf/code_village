@@ -1,4 +1,5 @@
 from database_connector import dbConnector
+from checkbalance import checkBalance
 
 def validatePin_Phone(user_pin,phone_number):
     connection = dbConnector()
@@ -26,9 +27,10 @@ def validatePin_Phone(user_pin,phone_number):
     
     if str(phone_number) in all_phones and user_pin in all_pins:
         print('Phone Number and Pin Correct')
+        checkBalance(user_pin)
     else:
         print('Incorrect Phone Number and or Pin')
         exit()
         
-#validatePin_Phone(7878,2547856987418)
+#validatePin_Phone(7878,254785698741)
     

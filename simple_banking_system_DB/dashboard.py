@@ -14,6 +14,7 @@ if (user_input == 1):
     phone_number = int(input('Enter phone number :'))
     validatePin_Phone(user_pin,phone_number)
     
+"""   
 elif (user_input == 2):
     
     receipientPhoneNumber = int(input('Enter the recepient number :'))
@@ -34,6 +35,6 @@ elif (user_input == 2):
             break
 elif(user_input == 0):
     exit()
-    
+"""  
 
 
