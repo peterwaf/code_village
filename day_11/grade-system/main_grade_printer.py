@@ -1,4 +1,3 @@
-import math
 from student_class import Student
 from student_school import School
 from student_subjects import Subject
