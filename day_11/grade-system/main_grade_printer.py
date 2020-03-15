@@ -1,12 +1,11 @@
 from student_class import Student
 from student_school import School
 from student_subjects import Subject
-from grading_system import gradingSystem
-from get_mean import getMean
 from mysql_function import insertSchoolTodb
 from mysql_function import insertStudentTodb
 from mysql_function import getStudentId
 from mysql_function import insertSubjectTodb
+from grades_printer import getSubjects
 
 allstudents = [] #for storing all student objects in a list
 
@@ -36,3 +35,16 @@ for x in range(0,NoOfstudents):
         student_id = getStudentId(student)
         subj = Subject(subjectName,subjectScore,student_id)
         insertSubjectTodb(subj)
+
+#ask if user wants to print data
+       
+final_feedback = int(input('Print Grades Press\n1.Yes\n2.No\n'))
+
+if (final_feedback==1):
+    getSubjects()
+elif(final_feedback==2):
+    print('Data saved.Thank you.')
+    exit()
+else:
+    print('Invalid input.')
+    exit()
