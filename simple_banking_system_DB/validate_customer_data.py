@@ -7,25 +7,17 @@ def validatePin_Phone(user_pin,phone_number):
     
     #validate pin
     
-    myquery = "SELECT pin FROM banking_app.customers;"
-    cursor.execute(myquery)
-    all_data = cursor.fetchall()
-    all_pins = []
-    for tuple_lister in all_data:
-        for single_pin in tuple_lister:
-            all_pins.append(single_pin)
+    myquery = "select * from customers where pin=%s;"
+    pin = (user_pin,)
+    cursor.execute(myquery,pin)
+    phone_pin_datas = []
+    phone_pin_data = cursor.fetchone()
+    for num in phone_pin_data:
+        phone_pin_datas.append(num)
             
-    #validate phone number
+    #validate phone number & pin
     
-    myquery2 = "SELECT mobileNumber FROM banking_app.customers;"
-    cursor.execute(myquery2)
-    all_phones_data = cursor.fetchall()
-    all_phones = []
-    for phonetuple_lister in all_phones_data:
-        for single_phone in phonetuple_lister:
-            all_phones.append(single_phone)
-    
-    if str(phone_number) in all_phones and user_pin in all_pins:
+    if str(phone_number) in phone_pin_datas and user_pin in phone_pin_datas:
         print('Phone Number and Pin Correct')
         checkBalance(user_pin)
     else:
@@ -33,4 +25,14 @@ def validatePin_Phone(user_pin,phone_number):
         exit()
         
 #validatePin_Phone(7878,254785698741)
+
+def recipientPhoneNumber(receipientPhoneNumber):
+    connection = dbConnector()
+    cursor = connection.cursor()
+    myquery = "select * from customers where mobileNumber=%s;"
+    phoneval = (receipientPhoneNumber,)
+    cursor.execute(myquery,phoneval)
+    phone_Numcolumn = cursor.fetchone()
+    #print(phone_Numcolumn)
+    
     
