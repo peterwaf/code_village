@@ -19,15 +19,16 @@ def sendMoney(user_pin,receipientPhoneNumber,amount):
         
     elif(sender_balance >= amount):
         receiver_balance = receiver_account_balance(receipientPhoneNumber)
+        transaction_fee = 0.1 * amount
         amount_to_send = amount
-        new_sender_balance = sender_balance - amount_to_send
+        new_sender_balance = sender_balance - transaction_fee - amount_to_send
         new_receiver_balance = receiver_balance + amount_to_send
         sender_id = getSenderID(user_pin)
         sender_name = getSenderName(user_pin)
         receiver_id = getReceiverID(receipientPhoneNumber)
         receiver_name = getReceiverName(receipientPhoneNumber)
         
-        print('Hi {} ,You are about to send {} to {} of phone number {}'.format(amount_to_send,sender_name,amount,receiver_name,receipientPhoneNumber))
+        print('Hi {} ,You are about to send {} to {} of phone number {}'.format(sender_name,amount_to_send,receiver_name,receipientPhoneNumber))
         feedback = int(input('1.Confirm\n2.Cancel\n:'))
         if(feedback == 1):
             #update_sender_balance
@@ -36,7 +37,7 @@ def sendMoney(user_pin,receipientPhoneNumber,amount):
             cursor.execute(sql,values)
             connection.commit()
             
-            print('{} sent to {}, your new balance is {}'.format(,receiver_name,new_sender_balance))
+            print('{} sent to {}, Transaction fee is : {} your new balance is {}'.format(amount_to_send,receiver_name,transaction_fee,new_sender_balance))
             
             #update receiver balance
             sql = "UPDATE accounts SET accountBalance=%s WHERE customer_id=%s;"

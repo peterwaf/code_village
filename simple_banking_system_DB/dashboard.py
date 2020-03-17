@@ -8,10 +8,10 @@ from validate_customer_data import ValidateRecipientPhoneNumber
 from validate_customer_data import validatePin
 
 
-
 #customer attribures : name,idNumber,uniqueID,mobileNo,Pin,account
 #currency attributes : code,currencyname
 #account attributes accountName,accountNumber,accountType,accountBalance,currency
+
 
 user_input = int(input('Select\n1.Check Balance\n2.Send Money\n0.Exit\n:'))
 
