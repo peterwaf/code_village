@@ -10,8 +10,6 @@ def checkBalance(user_pin):
     cursor.execute(myquery,customer_pin)
     inserted_pindata = cursor.fetchone()
     
-    customer = Customer(inserted_pindata[0],inserted_pindata[1],inserted_pindata[3],inserted_pindata[4],inserted_pindata[5])
-    print('Customer Name :{}\nID Number :{}'.format(customer.name,customer.idNumber))
     #fetch customer id
     
     customer_id = inserted_pindata[5]

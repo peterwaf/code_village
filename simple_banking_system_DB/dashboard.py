@@ -13,7 +13,7 @@ from validate_customer_data import validatePin
 #currency attributes : code,currencyname
 #account attributes accountName,accountNumber,accountType,accountBalance,currency
 
-user_input = int(input('Select\n1.Check Balance\n2.Send Money\n0.Exit\n'))
+user_input = int(input('Select\n1.Check Balance\n2.Send Money\n0.Exit\n:'))
 
 if (user_input == 1):
     user_pin = int(input('Enter Pin :'))

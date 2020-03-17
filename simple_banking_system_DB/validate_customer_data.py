@@ -19,7 +19,7 @@ def validatePin_Phone(user_pin,phone_number):
     #validate phone number & pin
     
     if str(phone_number) in phone_pin_datas and user_pin in phone_pin_datas:
-        print('Phone Number and Pin Correct')
+        print('Confirmed')
         checkBalance(user_pin)
     else:
         print('Incorrect Phone Number and or Pin')
@@ -40,9 +40,8 @@ def ValidateRecipientPhoneNumber(receipientPhoneNumber):
     if (receipientPhoneNumber in phones):
         pass
     else:
-        print('Phone Not Registered ')
+        print('Invalid Phone')
         exit()
-
 
 def validatePin(user_pin):
     connection = dbConnector()
@@ -50,23 +49,18 @@ def validatePin(user_pin):
     
     #validate pin
     
-    myquery = "select * from customers where pin=%s;"
-    pin = (user_pin,)
-    cursor.execute(myquery,pin)
-    phone_pin_datas = []
-    phone_pin_data = cursor.fetchone()
-    for num in phone_pin_data:
-        phone_pin_datas.append(num)
-            
-    #validate phone number & pin
-    
-    if user_pin in phone_pin_datas:
+    myquery = "select pin from customers;"
+    cursor.execute(myquery)
+    phone_pin_data = cursor.fetchall()
+    pins = []
+    for row_one_pin in phone_pin_data:
+        for one_pin in row_one_pin:
+            pins.append(one_pin)
+    if user_pin in pins:
         pass
-        
     else:
-        print('Incorrect Pin')
+        print('Invalid Pin')
         exit()
-
 
 #grab sender_account Bal
 
@@ -94,8 +88,7 @@ def sender_account_balance(user_pin):
     #accounts balance 
     account_bal = accounts_data[3]
     return account_bal
-    
-    
+     
 #grab receiver _account Bal
 
 def receiver_account_balance(receipientPhoneNumber):
@@ -123,10 +116,7 @@ def receiver_account_balance(receipientPhoneNumber):
     account_bal = accounts_data[3]
     return account_bal
     
-
 #get sender pin
-
-
 
 def getSenderID(user_pin):
     connection = dbConnector()
@@ -141,6 +131,36 @@ def getSenderID(user_pin):
     return sender_id
 
 
+#get sender Name
+
+def getSenderName(user_pin):
+    connection = dbConnector()
+    cursor = connection.cursor()
+    myquery = "select * from customers where pin=%s;"
+    pin = (user_pin,)
+    cursor.execute(myquery,pin)
+    phone_pin_data = cursor.fetchone()
+    
+    #grab sender name,id and phone
+    sender_name = phone_pin_data[0]
+    return sender_name
+    
+#getSenderName(7878)
+#get receiver Name
+
+def getReceiverName(receipientPhoneNumber):
+    connection = dbConnector()
+    cursor = connection.cursor()
+    myquery = "select * from customers where mobileNumber=%s;"
+    phoneNum = (receipientPhoneNumber,)
+    cursor.execute(myquery,phoneNum)
+    receiver_data = cursor.fetchone()
+    
+    #grab sender name,id and phone
+    receiver_name = receiver_data[0]
+    return receiver_name
+    
+#getReceiverName(254785698741)
 #get receiver Pin
 
 def getReceiverID(receipientPhoneNumber):
@@ -154,13 +174,12 @@ def getReceiverID(receipientPhoneNumber):
     receiver_id = phone_num_data[5]
     return receiver_id
 
-#getReceiverID(254785698741)
 
+#getReceiverID(254785698741)
 #sender_account_balance(7878)
-#receiver_account_balance(254785698741)
- 
+#receiver_account_balance(254785698741) 
 #ValidateRecipientPhoneNumber(2547856987418)
-#validatePin(78758)
+
 
 
     
