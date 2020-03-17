@@ -19,7 +19,7 @@ def sendMoney(user_pin,receipientPhoneNumber,amount):
         
     elif(sender_balance >= amount):
         receiver_balance = receiver_account_balance(receipientPhoneNumber)
-        transaction_fee = 0.1 * amount
+        transaction_fee = 0.01 * amount
         amount_to_send = amount
         new_sender_balance = sender_balance - transaction_fee - amount_to_send
         new_receiver_balance = receiver_balance + amount_to_send
