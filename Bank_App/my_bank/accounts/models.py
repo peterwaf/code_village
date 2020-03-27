@@ -6,9 +6,12 @@ class Account(models.Model):
     accountName = models.CharField(max_length=100)
     accountNumber = models.IntegerField()
     accountType = models.CharField(max_length=100)
-    accountBalance = models.IntegerField()
+    accountBalance = models.FloatField()
     customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
     currency_id = models.ForeignKey(Currency,on_delete=models.CASCADE,default=1)
     
     class Meta:
         db_table = 'tbl_accounts'
+    
+    def __str__(self):
+        return self.accountName

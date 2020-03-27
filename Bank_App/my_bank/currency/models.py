@@ -7,3 +7,6 @@ class Currency(models.Model):
     
     class Meta:
         db_table = 'tbl_currency'
+    
+    def __str__(self):
+        return self.code

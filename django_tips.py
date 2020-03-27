@@ -1,3 +1,11 @@
+python3 manage.py shell
+from schools.models import School
+School.objects.all()
+school = School(name='Upperhill',code='2003',address='Nyeri',no_of_students=10)
+school.save()
+School.objects.all()
+
+
 #models example under manage.py
 
 #important codes
