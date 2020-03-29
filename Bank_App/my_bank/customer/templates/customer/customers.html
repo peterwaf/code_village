@@ -7,10 +7,19 @@
 </head>
 <body>
     <h1>Customers</h1>
-    <ul>
+    <table border="2px">
+        <tr>
+            <th>Customer Name</th>
+            <th>Id Number</th>
+            <th>Phone Number</th>
+        </tr>
     {%for customer in all_customers%}
-    <li>{{customer}}</li>
+    <tr>
+        <td>{{customer}}</td>
+        <td>{{customer.idNumber}}</td>
+        <td>{{customer.mobileNo}}</td>
+    </tr>
     {%endfor%}
-    </ul>
+    </table>
 </body>
 </html>
