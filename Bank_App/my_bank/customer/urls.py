@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from customer.views import show_all_customers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('customers/',show_all_customers)
 ]
 
