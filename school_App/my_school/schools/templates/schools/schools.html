@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schools</title>
+</head>
+<body>
+    <h1>Schools</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th><th>Code</th><th>Address</th>
+        </tr>
+            {% for school in all_schools%}
+            <tr>
+            <td>{{school.name}}</td>
+            <td>{{school.code}}</td>
+            <td>{{school.address}}</td>
+            {% endfor %}
+            </tr>
+    </table>
+</body>
+</html>
