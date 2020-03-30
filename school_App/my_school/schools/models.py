@@ -9,3 +9,6 @@ class School(models.Model):
     
     class Meta:
         db_table = 'tbl_schools'
+    
+    def __str__(self):
+        return self.name
