@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+</head>
+<body>
+    <h1>Students</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Address</th>
+            <th>Age</th>
+            <th>Parent Mobile</th>
+            <th>School</th>
+        </tr>
+        {% for student in all_students%}
+        <tr>
+            <td>{{student.name}}</td>
+            <td>{{student.registration_number}}</td>
+            <td>{{student.address}}</td>
+            <td>{{student.age}}</td>
+            <td>{{student.parent_mobile}}</td>
+            <td>{{student.school}}</td>
+            {% endfor %}
+        </tr>
+    </table>
+</body>
+</html>
