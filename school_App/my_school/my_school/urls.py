@@ -21,4 +21,5 @@ urlpatterns = [
     path('',include('schools.urls')),
     path('',include('students.urls')),
     path('',include('subjects.urls')),
+    path('',include('dashboard.urls')),
 ]
