@@ -13,7 +13,7 @@
         </tr>
             {% for school in all_schools%}
             <tr>
-            <td>{{school.name}}</td>
+            <td><a href="/schools/{{school.id}}">{{school.id}}</a> {{school.name}}</td>
             <td>{{school.code}}</td>
             <td>{{school.address}}</td>
             {% endfor %}
