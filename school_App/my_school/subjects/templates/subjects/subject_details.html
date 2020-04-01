@@ -16,12 +16,14 @@
         <tr>
             <th>Name</th>
             <th>Score</th>
+            <th>Grade</th>
 
         </tr>
         {% for subject in all_student_subjects%}
         <tr>
             <td>{{subject.name}}</td>
             <td>{{subject.score}}</td>
+            <td>{{subject.ShowGrade}}</td>
 
             {% endfor %}
         </tr>

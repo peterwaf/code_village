@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Subject
 from students.models import Student
+
 # Create your views here.
 
 def show_subjects(request):
@@ -14,5 +15,6 @@ def single_student_subject(request,student_id):
     context = {'all_student_subjects':all_student_subjects,'student_name':student_name}
     return render(request,"subjects/subject_details.html",context)
 
+    
 
     

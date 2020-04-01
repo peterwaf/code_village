@@ -1,5 +1,6 @@
 from django.db import models
 from students.models import Student
+from .grading_system import gradingSystem
 # Create your models here.
 
 class Subject(models.Model):
@@ -12,3 +13,6 @@ class Subject(models.Model):
         
     def __str__(self):
         return self.name
+    
+    def ShowGrade(self):
+        return gradingSystem(self.score)
