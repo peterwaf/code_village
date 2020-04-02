@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import School
 from students.models import Student
 
@@ -10,8 +10,9 @@ def show_schools(request):
     return render(request,"schools/schools.html",context)
 
 def show_students(request,school_id):
-    #school_detail=School.objects.get(pk=school_id) if you want to display school details
+    school_detail=School.objects.filter(pk=school_id) #display school details
     school_student = Student.objects.filter(school=school_id)
-    context = {'school_student':school_student}
+    context = {'school_student':school_student,'school_detail':school_detail}
     return render(request,"schools/details.html",context)
+
     

@@ -8,7 +8,15 @@
 </head>
 
 <body>
-    <h1>Students</h1>
+    <ul>
+        {% for school in school_detail %}
+        <li><p>School : {{school.name}}</p></li>
+        <li><p>Code : {{school.code}}</p></li>
+        <li><p>Address : {{school.address}}</p></li>
+
+        {% endfor %}
+</ul>
+    <p>Students</p>
     <table border="1">
         <tr>
             <th>Student Id</th>
@@ -31,7 +39,8 @@
             {% endfor %}
         </tr>
     </table>
-    <p><a href="{% url 'dashboard' %}">Home</a></p>
+    <p><a href="{%url 'students' %}">Students</a></p>
+    <p><a href="{%url 'index' %}">Home</a></p>
 </body>
 
 </html>

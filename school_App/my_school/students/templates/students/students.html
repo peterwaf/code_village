@@ -6,6 +6,10 @@
     <title>Students</title>
 </head>
 <body>
+   {% for  school in school_detail %}
+    <p>{{school.name}} test</p>
+
+    {% endfor %}
     <h1>Students</h1>
     <table border="1">
         <tr>
@@ -29,6 +33,6 @@
             {% endfor %}
         </tr>
     </table>
-    <p><a href="{% url 'dashboard' %}">Home</a></p>
+    <p><a href="{%url 'index' %}">Home</a></p>
 </body>
 </html>
