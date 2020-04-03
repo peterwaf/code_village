@@ -1,3 +1,117 @@
+"""
+def addStudent(request):
+    all_schools = School.objects.all() #import school in db after importing School model
+    if request.method == "POST":
+        form = request.POST
+        student = Student()
+        student.name = form['name']
+        student.registration_number = form['registration_number']
+        student.address = form['address']
+        student.age = form['age']
+        student.parent_mobile = form['parent_mobile']
+        student.school = School.objects.get(pk=form['school']) #grab if of the school in the DB
+        student.save() #save the details in the database
+        
+        return redirect('students:student_list') #redirect to the link under urls.py
+    
+    context = {'all_schools':all_schools}
+    
+    return render(request,"students/add_student.html",context)
+    
+===form for abpve function====
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Students</title>
+</head>
+
+<body>
+    <form action="{% url 'students:add' %}" name="frm_student" method="POST">
+        {% csrf_token %}
+        <!--Prevents cross site scripting-->
+        <label for="name"> Name :</label>
+
+        <input type="text" id="name" name="name" value="">
+<br>
+        <label for="name"> Registration :</label>
+
+        <input type="text" id="registration_number" name="registration_number" value="">
+<br>
+        <label for="name"> Address :</label>
+        
+        <input type="text" id="address" name="address" value="">
+<br>
+       
+        <label for="number">Age :</label>
+
+        <input type="number" id="age" name="age" value="">
+<br>
+        <label for="parent_mobile"> Parent Mobile :</label>
+
+        <input type="text" id="parent_mobile" name="parent_mobile" value="">
+<br>
+        <label for="parent_mobile"> School</label>
+
+        <select name="school" id="school">
+            {%for school in all_schools%}
+            <option value="{{school.id}}">{{school.name}}</option>
+            {%endfor%}
+        </select>
+<br>
+        <input type="Submit" value="Save">
+
+    </form>
+</body>
+
+</html>
+
+
+urlpatterns = [
+    path('schools/',views.show_schools,name='schools'),
+    path('schools/<int:school_id>/',views.show_students,name='school_details'),
+]
+
+#dynamic views example
+
+def show_students(request,school_id):
+    #school_detail=School.objects.get(pk=school_id) if you want to display school details
+    school_student = Student.objects.filter(school=school_id)
+    context = {'school_student':school_student}
+    return render(request,"schools/details.html",context)
+
+
+# admin filters example
+
+from django.contrib import admin
+from.models import Customer
+# Register your models here.
+
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('name','idNumber','mobileNo','pin') #list_display is inbuilt
+    search_fields = ('name','idNumber') #seach fields is inbuilt
+    
+#allow display multiple items on admin page
+admin.site.register(Customer,CustomerAdmin)
+"""
+
+#rendering a view example
+from django.shortcuts import render
+from .models import Posts
+
+
+# Create your views here.
+def post_list_view(request):
+    post_objects = Posts.objects.all()
+    context = {
+        'post_objects': post_objects
+    }
+    return render(request, "posts/index.html", context) #posts/index.html should be under appname/templates/appname/index.html
+
+#==================
 python3 manage.py shell
 from schools.models import School
 School.objects.all()
@@ -5,11 +119,11 @@ school = School(name='Upperhill',code='2003',address='Nyeri',no_of_students=10)
 school.save()
 School.objects.all()
 
-
 #models example under manage.py
 
 #important codes
-
+sudo apt install python3-pip
+sudo apt-get install mysql-client
 pip install mysqlclient
 source env/bin/activate
 python3 manage.py runserver

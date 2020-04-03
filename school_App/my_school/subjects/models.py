@@ -11,8 +11,14 @@ class Subject(models.Model):
     class Meta:
         db_table = 'tbl_subjects'
         
+    """
     def __str__(self):
         return self.name
+    """
     
     def ShowGrade(self):
         return gradingSystem(self.score)
+    
+    def __str__(self):
+        return "{} {}".format(self.name,self.ShowGrade())
+    

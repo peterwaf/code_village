@@ -9,7 +9,7 @@ def show_students(request):
     return render(request,"students/students.html",context)
 
 def addStudent(request):
-    all_schools = School.objects.all()
+    all_schools = School.objects.all() #import school in db after importing School model
     if request.method == "POST":
         form = request.POST
         student = Student()
