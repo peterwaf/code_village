@@ -1,3 +1,4 @@
+import math
 def gradingSystem(marks):
     if (marks >=80 and marks <=100):
         return 'A'
@@ -14,4 +15,4 @@ def getSum(a,b,c):
     return a + b + c
 
 def getMean(score,num_of_subjects):
-    return score/num_of_subjects
+    return round((score/num_of_subjects),2)

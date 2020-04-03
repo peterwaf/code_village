@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subject For Student</title>
+</head>
+<body>
+    <form action="{% url 'subjects:add' %}" method="POST" name="frm_subjects">
+    {% csrf_token%}
+
+    <label for="name"> Subject Name</label>
+
+    <input type="text" name="name" id="name" value="">
+
+    <label for="score"> Subject Score</label>
+
+    <input type="text" name="score" id="score" value=""> 
+
+    <label for="score"> Student</label>
+    
+    <select name="student" id="student">
+        {%for student in all_students%}
+        <option value="{{student.id}}">{{student.name}}</option>
+        {%endfor%}
+    </select>
+
+    <input type="Submit" value="Submit">
+    
+    </form>
+
+</body>
+</html>
