@@ -9,22 +9,23 @@
     <form action="{% url 'subjects:add' %}" method="POST" name="frm_subjects">
     {% csrf_token%}
 
-    <label for="name"> Subject Name</label>
+    <label for="name"> Subject Name : </label>
 
     <input type="text" name="name" id="name" value="">
 
-    <label for="score"> Subject Score</label>
+    <br>
+    <label for="score"> Subject Score : </label>
 
     <input type="text" name="score" id="score" value=""> 
-
-    <label for="score"> Student</label>
+        <br>
+    <label for="score"> Student :</label>
     
     <select name="student" id="student">
         {%for student in all_students%}
         <option value="{{student.id}}">{{student.name}}</option>
         {%endfor%}
     </select>
-
+<br>
     <input type="Submit" value="Submit">
     
     </form>
