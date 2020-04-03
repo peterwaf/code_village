@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Account Information</title>
+
+</head>
+<body>
+{% for customerinfo in customer_account_info %}
+<h1>Customer Name : {{customerinfo.customer_id}}</h1>
+{% endfor %}
+
+ <ul style="list-style-type: none;">
+     {% for customerinfo in customer_account_info %}
+    
+    <li>Account Name : {{customerinfo.accountName}}</li>
+    <li>Account Number : {{customerinfo.accountNumber}}</li>
+    <li>Account Type : {{customerinfo.accountType}}</li>
+    <li>Account Balance : {{customerinfo.currency_id}} . {{customerinfo.accountBalance}}</li>
+
+    {% endfor %}
+ </ul>
+</body>
+</html>

@@ -7,5 +7,30 @@
 </head>
 <body>
     <h1>Customer Accounts</h1>
+    <table border="1">
+    <tr>
+ <!---accountName,accountNumber,accountType,accountBalance,customer_id,currency_id-->        
+        
+        <th>Id</th>
+        <th>Account Name</th>
+        <th>Account Number</th>
+        <th>Account Type</th>
+        <th>Account Balance</th>
+        <th>Customer Name</th>
+        <th>Currency Id</th>
+    </tr>
+    {% for customer_account in all_customer_accounts %}
+    <tr>
+    <td>{{customer_account.id}}</td>
+    <td>{{customer_account.accountName}}</td>
+    <td>{{customer_account.accountNumber}}</td>
+    <td>{{customer_account.accountType}}</td>
+    <td>{{customer_account.accountBalance}}</td>
+    <td>{{customer_account.customer_id}}</td>
+    <td>{{customer_account.currency_id}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <p><a href="{%url 'home'%}">Home</a></p>
 </body>
 </html>
