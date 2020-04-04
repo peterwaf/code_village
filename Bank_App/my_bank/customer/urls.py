@@ -22,5 +22,6 @@ app_name = 'customer'
 urlpatterns = [
     path('customers/',views.show_all_customers,name='customers'),
     path('customers/<int:cust_id>/',views.customer_Account_Details,name='customer_details'),
+    path('customers/add/',views.addCustomer,name='add_customer')
 ]
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer</title>
+</head>
+<body>
+    <form action="{% url 'customer:add_customer' %}" method="POST" name="">
+    {% csrf_token %}
+    {{form.as_p}}
+
+<button type="Submit" name="submit">Submit</button>
+    </form>
+</body>
+</html>
