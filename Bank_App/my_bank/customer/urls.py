@@ -22,6 +22,12 @@ app_name = 'customer'
 urlpatterns = [
     path('customers/',views.show_all_customers,name='customers'),
     path('customers/<int:cust_id>/',views.customer_Account_Details,name='customer_details'),
-    path('customers/add/',views.addCustomer,name='add_customer')
+    path('customers/add/',views.addCustomer,name='add_customer'),
+    #path('login/',views.logIn,name='login'),
+    #path('register/',views.Register,name='register'),
+    #path('logout/',views.Logout,name='logout'),
+    path('customerlogin/',views.CustomerLogin,name='customerlogin'),
+    path('profile/',views.customerProfile,name='customer_profile')
+    
 ]
 
