@@ -30,15 +30,17 @@ def sendMOney(request):
     return render(request,"accounts/sendmoney.html",context)
 
 def CheckBalance(request,customer_id):
-    accounts = Account.objects.filter(customer_id=customer_id)
-    context = {'accounts':accounts
-        }
+    accounts = Account.objects.filter(customer_id=customer_id) #grab all customer accounts and filter
+    bal = 0 #global variable
     if request.method == "POST":
         form = request.POST
-        account_id = form['account']
-        account_info = Account.objects.get(id=account_id)
-       
-    
+        account_id = form['account'] #grab the account id
+        account_info = Account.objects.get(pk=account_id) #grab the pk
+        bal = account_info.accountBalance #change global variable
+        context = {'accounts':accounts,'bal':bal,'customer_id':customer_id,'account_info':account_info}
+        return render(request,"accounts/account_info.html",context)
+        
+    context = {'accounts':accounts,'customer_id':customer_id}
     return render(request,"accounts/balance.html",context)
 
 def ShowBalance(request):
