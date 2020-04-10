@@ -158,12 +158,14 @@ background-color: #F1F1F1;
                 <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg"
                     class="img-thumbnail visible-xs picture_mob" />
                 <div class="header">
-                    
-                    <h1>Hello </h1>
-                    
-                    <span>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-                        "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it
-                        is pain..."</span>
+                    {% for cust in customer%}
+                    <h1>Hello {{cust.name}}</h1>
+                    {% endfor %}
+                    {% for cust in customer%}
+                    <span>ID Number : {{cust.idNumber}}</span>
+                    <br>
+                    <span>Phone Number : {{cust.mobileNo}}</span>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -171,7 +173,7 @@ background-color: #F1F1F1;
         <div class="row nav">
             <div class="col-md-4"></div>
             <div class="col-md-8 col-xs-12" style="margin: 0px;padding: 0px;">
-                <div class="col-md-4 col-xs-4 well"> <a href="{% url 'accounts:balance' %}">Check Balance</a></div>
+                <div class="col-md-4 col-xs-4 well"> <a href="balance/{% for cust in customer%}{{cust.id}}{% endfor %}/">Check Balance</a></div>
                 <div class="col-md-4 col-xs-4 well"> <a href="{% url 'accounts:sendmoney' %}">Send Money</a></div>
                 <div class="col-md-4 col-xs-4 well"><a href="{% url 'accounts:withdraw' %}">Withdraw Money</a></div>
             </div>

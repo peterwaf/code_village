@@ -27,7 +27,7 @@ urlpatterns = [
     #path('register/',views.Register,name='register'),
     #path('logout/',views.Logout,name='logout'),
     path('customerlogin/',views.CustomerLogin,name='customerlogin'),
-    path('profile/',views.customerProfile,name='customer_profile')
+    path('profile/<int:customer_id>',views.customerProfile,name='customer_profile')
     
 ]
 

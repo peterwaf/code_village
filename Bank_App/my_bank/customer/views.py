@@ -78,25 +78,21 @@ def customer_Account_Details(request,cust_id):
     return render(request,"customer/customer_account.html",context)
 
 
-def customerProfile(request):
-    context = {
+def customerProfile(request,customer_id):
+    customer = Customer.objects.filter(pk=customer_id)
+    context = { 'customer':customer
                }
     return render(request,"customer/customer_profile.html",context)
 
 
 def CustomerLogin(request):
-    customer_info = Customer.objects.all()
     if request.method == "POST":
         form = request.POST
-        mobileNo = form['mobileNo']
-        pin = form['pin']
-        mobilenumbers = []
-        pins = []
-        for log_info in customer_info:
-            mobilenumbers.append(log_info.mobileNo)
-            pins.append(log_info.pin)
-        if (mobileNo in mobilenumbers and pin in pins):
-            return redirect('customer:customer_profile')
+        number = form['mobileNo']
+        access = form['pin']
+        customer_info = Customer.objects.get(mobileNo=number)
+        if (customer_info.mobileNo == number and customer_info.pin == access):
+            return redirect('customer:customer_profile',customer_info.id)
         else:
             messages.info(request,'Invalid Phone or Pin')
             
