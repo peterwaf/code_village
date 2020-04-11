@@ -79,7 +79,7 @@ def customer_Account_Details(request,cust_id):
 
 
 def customerProfile(request,customer_id):
-    customer = Customer.objects.filter(pk=customer_id)
+    customer = Customer.objects.get(pk=customer_id)
     context = { 'customer':customer
                }
     return render(request,"customer/customer_profile.html",context)

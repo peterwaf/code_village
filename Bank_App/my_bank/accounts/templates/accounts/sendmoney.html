@@ -42,19 +42,21 @@ span.input-group-addon i {
 <div class="main">
     <div class="main-center">
         <h5>Please fill in below details</h5>
-        <form class="" method="post" action="#">
-
+        <form class="" method="post" action="">
+            {% csrf_token %}
         <div class="form-group">
             <label for="selectAccount">Select Account</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-                <option>1</option>
-                <option>2</option>
+            <select class="form-control" id="accounts" name="accounts">
+                {% for account in accounts %}
+                <option value="{{account.id}}">{{account.accountNumber}}</option>
+                {% endfor %}
+                
             </select>
                     <div class="form-group">
-                        <label for="username">Amount</label>
+                        <label for="amount">Amount</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="username" placeholder="Enter Amount" />
+                            <input type="number" class="form-control" name="amount" placeholder="Enter Amount" />
                         </div>
                     </div>
 
@@ -63,7 +65,7 @@ span.input-group-addon i {
                 <label for="username">To :</label>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="receiver" placeholder="Enter Receiver Account" />
+                    <input type="number" class="form-control" name="receiverAccount" placeholder="Enter Receiver Account" />
                 </div>
             </div>
 
@@ -76,8 +78,9 @@ span.input-group-addon i {
             </div>
 
             <button type="submit">SUBMIT</button>
-        <a href="" style="color:#fff;">Go Back</a>
+        <a href="/profile/{{customer_id}}" style="color:#fff;">Go Back</a>
         </form>
+        
     </div>
     <!--main-center"-->
 </div>

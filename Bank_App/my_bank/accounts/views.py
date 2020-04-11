@@ -4,7 +4,13 @@ from .forms import AccountForm
 from customer.models import Customer
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
+
+def transactionFee(amount):
+    fee = 0.01 * amount
+    return fee
+
 
 def show_accounts(request):
     all_customer_accounts = Account.objects.all()
@@ -12,7 +18,6 @@ def show_accounts(request):
         'all_customer_accounts':all_customer_accounts
         }
     return render(request,"accounts/customer_accounts.html",context)
-
 
 def AddCustomerAccounts(request):
     form = AccountForm(request.POST or None)
@@ -23,9 +28,53 @@ def AddCustomerAccounts(request):
     
     return render(request,"accounts/add_account.html",context)
 
-def sendMOney(request):
-    context = {
+def SendSuccessful(request):
+    context = {}
+    return render(request,"accounts/send_success.html",context)
+
+
+
+def sendMOney(request,customer_id):
+    accounts = Account.objects.filter(customer_id=customer_id)
+    if request.method == "POST":
+        form = request.POST
+        sender_account = form['accounts']
+        amount = form['amount']
+        receiver_account = form['receiverAccount']
+        customer = Customer.objects.get(pk=customer_id)
+        sender_name = customer.name
+        receiver_accountinDB = Account.objects.get(accountNumber=receiver_account) #fetch receiver account info
+        confirmedReceiverAccount = receiver_accountinDB.accountNumber
+        receiverName = receiver_accountinDB.customer_id
+        #grab receiver amount
+        receiverAMount = receiver_accountinDB.accountBalance
+        pin = form['password']
+        #update receiver amount
+        new_receiverAmount = float(receiverAMount) + float(amount)
+        #update receiver account
+        receiver_accountinDB.accountBalance = new_receiverAmount
+        #get the sender account object
+        sender_accountinDB = Account.objects.get(id=sender_account)
+        senderAccountCurrency = sender_accountinDB.currency_id
+        #subtract the sender's balance with new amount
+        newSenderBalance =  sender_accountinDB.accountBalance - float(amount)
+        #update the sender's account balance
+        sender_accountinDB.accountBalance = newSenderBalance
+        sender_accountinDB.save()
+        receiver_accountinDB.save()
+        context = {'amount':amount,
+                   'newSenderBalance':newSenderBalance,
+                   'new_receiverAmount':new_receiverAmount,
+                   'confirmedReceiverAccount':confirmedReceiverAccount,
+                   'sender_name':sender_name,
+                   'receiverName':receiverName,
+                   'senderAccountCurrency':senderAccountCurrency,
+                   'customer_id':customer_id
+                   }
+        return render(request,"accounts/send_success.html",context)
         
+    context = {
+        'accounts':accounts
         }
     return render(request,"accounts/sendmoney.html",context)
 
@@ -47,7 +96,6 @@ def ShowBalance(request):
     if request.method == "POST":
         form = request.POST
         account_id = form['account']
-
 
 def WithdrawMoney(request):
     context = {
