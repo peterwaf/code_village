@@ -46,24 +46,33 @@
         <div class="main">
             <div class="main-center">
                 <h5>Please fill in below details</h5>
-                <form class="" method="post" action="#">
-
+                <form class="" method="POST" action="">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="selectAccount">Select Account</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
+                        <select class="form-control" id="accounts" name="accounts">
+                            {% for account in accounts%}
+                            <option value="{{account.id}}">{{account.accountNumber}}</option>
+                            {% endfor %}
                         </select>
                         <div class="form-group">
                             <label for="username">Amount</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="username" placeholder="Enter Amount" />
+                                <input type="number" class="form-control" name="amount" placeholder="Enter Amount" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">Enter Pin </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="password" placeholder="Enter Pin" />
                             </div>
                         </div>
 
                         <button type="submit">Withdraw</button>
-                        <a href="{% url 'customer:customer_profile'%}" style="color:#fff;">Go Back</a>
+                        <a href="/profile/{{customer_id}}" style="color:#fff;">Go Back</a>
                 </form>
             </div>
             <!--main-center"-->

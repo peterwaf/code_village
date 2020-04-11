@@ -74,7 +74,8 @@ def sendMOney(request,customer_id):
         return render(request,"accounts/send_success.html",context)
         
     context = {
-        'accounts':accounts
+        'accounts':accounts,
+        'customer_id':customer_id
         }
     return render(request,"accounts/sendmoney.html",context)
 
@@ -97,7 +98,30 @@ def ShowBalance(request):
         form = request.POST
         account_id = form['account']
 
-def WithdrawMoney(request):
-    context = {
+def WithdrawMoney(request,customer_id):
+    accounts  = Account.objects.filter(customer_id=customer_id)
+    if request.method == "POST":
+        form = request.POST
+        customer_account= form['accounts']
+        amount = form['amount']
+        password = form['password']
+        #grab customer account object using the account number filled
+        account_obj = Account.objects.get(id=customer_account)
+        accountAmount = account_obj.accountBalance
+        customerAccountName = account_obj.customer_id
+        account_currency = account_obj.customer_id
+        new_account_balance = accountAmount - float(amount)
+        account_obj.accountBalance = new_account_balance
+        account_obj.save()
+        context = {'customer_id':customer_id,
+                   'accountAmount':accountAmount,
+                   'customerAccountName':customerAccountName,
+                   'new_account_balance':new_account_balance,
+                   'amount':amount
+                
+        }
+        return render(request,"accounts/withdraw_report.html",context)
+        
+    context = {'accounts':accounts,'customer_id':customer_id
         }
     return render(request,"accounts/withdraw.html",context)
