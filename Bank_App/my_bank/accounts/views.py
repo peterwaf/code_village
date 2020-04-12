@@ -5,6 +5,7 @@ from customer.models import Customer
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from transactions.models import Transactions
 # Create your views here.
 
 def transactionFee(amount):
@@ -62,6 +63,14 @@ def sendMOney(request,customer_id):
         sender_accountinDB.accountBalance = newSenderBalance
         sender_accountinDB.save()
         receiver_accountinDB.save()
+        
+        #add transactions
+        
+        trasactionSender = Transactions(cashIn=0,cashOut=float(amount),transactionFee=0,balance=newSenderBalance,customer=customer.name)
+        trasactionSender.save()
+        trasactionReceiver = Transactions(cashIn=float(amount),cashOut=0,transactionFee=0,balance=float(new_receiverAmount),customer=receiver_accountinDB.customer_id)
+        trasactionReceiver.save()
+        
         context = {'amount':amount,
                    'newSenderBalance':newSenderBalance,
                    'new_receiverAmount':new_receiverAmount,
