@@ -73,7 +73,19 @@
 
                         <button type="submit">Withdraw</button>
                         <a href="/profile/{{customer_id}}" style="color:#fff;">Go Back</a>
-                </form>
+                {% for message in messages %}
+                {% if "insuficient_balance" in message.tags %}
+                <p> {{message}} </p> {# show receiver account error message #}
+                {% endif %}
+                {% endfor %}
+
+                {% for message in messages %}
+                {% if "wrong_pin" in message.tags %}
+                <p> {{message}} </p> {# show receiver account error message #}
+                {% endif %}
+                {% endfor %}
+                
+                    </form>
             </div>
             <!--main-center"-->
         </div>

@@ -5,6 +5,8 @@ from .forms import CustomerForm,CreateUserForm #for importing the default user c
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+#Check if object does not exist when filtered in the Database
+from django.core.exceptions import ObjectDoesNotExist 
 
 # Create your views here.
 
@@ -90,11 +92,20 @@ def CustomerLogin(request):
         form = request.POST
         number = form['mobileNo']
         access = form['pin']
-        customer_info = Customer.objects.get(mobileNo=number)
-        if (customer_info.mobileNo == number and customer_info.pin == access):
-            return redirect('customer:customer_profile',customer_info.id)
-        else:
-            messages.info(request,'Invalid Phone or Pin')
+        
+        try:
+            #try will pick only if the object does not exist
+            customer_info = Customer.objects.get(mobileNo=number)
+            
+            if (customer_info.pin == access):
+                return redirect('customer:customer_profile',customer_info.id)
+            else:
+                messages.info(request,'Incorrect Pin')
+                
+        except ObjectDoesNotExist as ex:
+            messages.info(request,'Invalid Phone Number')
+            context = {}
+            return render(request,"customer/customer_login.html",context)
             
     context = {}
     return render(request,"customer/customer_login.html",context)

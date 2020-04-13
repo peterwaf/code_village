@@ -79,7 +79,22 @@ span.input-group-addon i {
 
             <button type="submit">SUBMIT</button>
         <a href="/profile/{{customer_id}}" style="color:#fff;">Go Back</a>
-        </form>
+        {% for message in messages %}
+        {% if "receiver_Account" in message.tags %}
+        <p> {{message}} </p> {# show receiver account error message #}
+        {% endif %}
+        {% endfor %}
+        {% for message in messages %}
+        {% if "InsufficientFunds" in message.tags %}
+        <p> {{message}} </p> {# show insufficient funds error message #}
+        {% endif %}
+        {% endfor %}
+        {% for message in messages %}
+        {% if "pin_error" in message.tags %}
+        <p> {{message}} </p> {# show wrong pin error message #}
+        {% endif %}
+        {% endfor %}
+    </form>
         
     </div>
     <!--main-center"-->

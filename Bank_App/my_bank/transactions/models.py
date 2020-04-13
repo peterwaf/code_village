@@ -1,5 +1,5 @@
 from django.db import models
-
+from customer.models import Customer
 
 # Create your models here.
 
@@ -9,7 +9,7 @@ class Transactions(models.Model):
     cashOut = models.FloatField()
     transactionFee = models.FloatField()
     balance = models.FloatField()
-    customer = models.CharField(max_length=150)
+    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
     
     class Meta:
         db_table = 'tbl_name_transactions'
