@@ -29,6 +29,46 @@ def AddCustomerAccounts(request):
     
     return render(request,"accounts/add_account.html",context)
 
+def DepositMoney(request):
+    if request.method == "POST":
+        form = request.POST
+        amount = form['amount']
+        account = form['account']
+        
+        try:
+            #grab customer account from the DB
+            customer_account_object = Account.objects.get(accountNumber=account)
+            customer_account_number = customer_account_object.accountNumber
+            customer_account_balance = customer_account_object.accountBalance
+            customer_account_name = customer_account_object.customer_id
+            new_customer_account_amount = customer_account_balance + float(amount)
+            customer_account_currency = customer_account_object.currency_id
+            #update customer amount
+            customer_account_object.accountBalance = new_customer_account_amount
+            #save the amount
+            customer_account_object.save()
+            #update transactions
+            customerCashIn = str(customer_account_currency) + " " +str(float(amount)) +" Account Deposit"
+            trasactionDeposit = Transactions(cashIn=customerCashIn,cashOut='-',transactionFee=0,balance=float(new_customer_account_amount),customer=Customer.objects.get(pk=customer_account_object.pk))
+            trasactionDeposit.save()
+            #send to customer success template
+            context = {'amount':amount,
+                       'new_customer_account_amount':new_customer_account_amount,
+                       'customer_account_currency':customer_account_currency,
+                       'customer_account_number':customer_account_number,
+                       'customer_account_name':customer_account_name,
+                       }
+            return render(request,"accounts/depositsuccess.html",context)
+            
+        except ObjectDoesNotExist as ex:
+            messages.info(request,"Account Does Not Exist")
+            context = {}
+            return render(request,"accounts/deposit.html",context)
+        
+    context = {}
+    return render(request,"accounts/deposit.html",context)
+
+
 def SendSuccessful(request):
     context = {}
     return render(request,"accounts/send_success.html",context)

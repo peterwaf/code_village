@@ -8,6 +8,7 @@ urlpatterns = [
     path('sendmoney/<int:customer_id>/',views.sendMOney,name="sendmoney"),
     path('profile/balance/<int:customer_id>/',views.CheckBalance,name="balance"),
     path('withdraw/<int:customer_id>/',views.WithdrawMoney,name="withdraw"),
-    path('transactions/<int:customer_id>/',views.ShowTransactions,name="transactions")
+    path('transactions/<int:customer_id>/',views.ShowTransactions,name="transactions"),
+    path('deposit/',views.DepositMoney,name="deposit"),
     
 ]
