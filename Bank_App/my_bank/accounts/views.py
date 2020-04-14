@@ -34,7 +34,6 @@ def SendSuccessful(request):
     return render(request,"accounts/send_success.html",context)
 
 
-
 def sendMOney(request,customer_id):
     accounts = Account.objects.filter(customer_id=customer_id)
     if request.method == "POST":
@@ -78,10 +77,11 @@ def sendMOney(request,customer_id):
                 receiver_accountinDB.save()
                 
                 #add transactions
-                
-                trasactionSender = Transactions(cashIn=0,cashOut=float(amount),transactionFee=transactionFees,balance=newSenderBalance,customer=Customer.objects.get(pk=customer_id))
+                senderCashOut = str(senderAccountCurrency) + " " + str(float(amount))+" sent to " +str(receiverName)+ " of account " + str(receiver_accountinDB.accountNumber)
+                receiverCashIn = str(senderAccountCurrency) + " " +str(float(amount))+" received from "+str(sender_name)+ " of account "+ str(sender_accountinDB.accountNumber)
+                trasactionSender = Transactions(cashIn='-',cashOut=senderCashOut,transactionFee=transactionFees,balance=newSenderBalance,customer=Customer.objects.get(pk=customer_id))
                 trasactionSender.save()
-                trasactionReceiver = Transactions(cashIn=float(amount),cashOut=0,transactionFee=0,balance=float(new_receiverAmount),customer=Customer.objects.get(pk=receiver_accountinDB.pk))
+                trasactionReceiver = Transactions(cashIn=receiverCashIn,cashOut='-',transactionFee=0,balance=float(new_receiverAmount),customer=Customer.objects.get(pk=receiver_accountinDB.pk))
                 trasactionReceiver.save()
                 context = {'amount':amount,
                         'transactionFees':transactionFees,
@@ -146,11 +146,12 @@ def WithdrawMoney(request,customer_id):
         
         else:
             customerAccountName = account_obj.customer_id
-            account_currency = account_obj.customer_id
+            account_currency = account_obj.currency_id
             new_account_balance = accountAmount - float(amount)
             account_obj.accountBalance = new_account_balance - transactionFees
             account_obj.save()
-            trasactionWithdraw = Transactions(cashIn=0,cashOut=float(amount),transactionFee=transactionFees,balance=new_account_balance,customer=Customer.objects.get(pk=customer_id))
+            customerCashOut = str(account_currency) + " " + str(float(amount))+ " withdrawn from your account "
+            trasactionWithdraw = Transactions(cashIn='-',cashOut=customerCashOut,transactionFee=transactionFees,balance=new_account_balance,customer=Customer.objects.get(pk=customer_id))
             trasactionWithdraw.save()
             context = {'customer_id':customer_id,
                     'account_currency':account_currency,
@@ -166,3 +167,8 @@ def WithdrawMoney(request,customer_id):
     context = {'accounts':accounts,'customer_id':customer_id
         }
     return render(request,"accounts/withdraw.html",context)
+
+def ShowTransactions(request,customer_id):
+    customertransactions = Transactions.objects.filter(customer=Customer.objects.get(pk=customer_id))
+    context = {'customer_id':customer_id,'customertransactions':customertransactions}
+    return render(request,'accounts/transactions.html',context)
