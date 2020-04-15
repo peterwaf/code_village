@@ -29,43 +29,53 @@ def AddCustomerAccounts(request):
     
     return render(request,"accounts/add_account.html",context)
 
-def DepositMoney(request):
+def DepositMoney(request,customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customer_pin = customer.pin
+    accounts = Account.objects.filter(customer_id=customer_id)
     if request.method == "POST":
         form = request.POST
         amount = form['amount']
-        account = form['account']
+        account = form['accounts']
+        pin = form['pin']
         
         try:
             #grab customer account from the DB
-            customer_account_object = Account.objects.get(accountNumber=account)
-            customer_account_number = customer_account_object.accountNumber
-            customer_account_balance = customer_account_object.accountBalance
-            customer_account_name = customer_account_object.customer_id
-            new_customer_account_amount = customer_account_balance + float(amount)
-            customer_account_currency = customer_account_object.currency_id
-            #update customer amount
-            customer_account_object.accountBalance = new_customer_account_amount
-            #save the amount
-            customer_account_object.save()
-            #update transactions
-            customerCashIn = str(customer_account_currency) + " " +str(float(amount)) +" Account Deposit"
-            trasactionDeposit = Transactions(cashIn=customerCashIn,cashOut='-',transactionFee=0,balance=float(new_customer_account_amount),customer=Customer.objects.get(pk=customer_account_object.pk))
-            trasactionDeposit.save()
-            #send to customer success template
-            context = {'amount':amount,
-                       'new_customer_account_amount':new_customer_account_amount,
-                       'customer_account_currency':customer_account_currency,
-                       'customer_account_number':customer_account_number,
-                       'customer_account_name':customer_account_name,
-                       }
-            return render(request,"accounts/depositsuccess.html",context)
+            customer_account_object = Account.objects.get(pk=account)
+            if (pin != customer_pin):
+                messages.info(request,'You have entered a Wrong Pin,Please Go Bank and Try again',extra_tags="pin_error")
+                context = {'customer_id':customer_id}
+                return render(request,"accounts/deposit.html",context)
+            
+            else:
+                
+                customer_account_number = customer_account_object.accountNumber
+                customer_account_balance = customer_account_object.accountBalance
+                new_customer_account_amount = customer_account_balance + round(float(amount),2)
+                customer_account_currency = customer_account_object.currency_id
+                #update customer amount
+                customer_account_object.accountBalance = new_customer_account_amount
+                #save the amount
+                customer_account_object.save()
+                #update transactions
+                customerCashIn = str(customer_account_currency) + " " +str(round(float(amount),2)) +" Account Deposit"
+                trasactionDeposit = Transactions(cashIn=customerCashIn,cashOut='-',transactionFee=0,balance=float(new_customer_account_amount),customer=Customer.objects.get(pk=customer_account_object.pk))
+                trasactionDeposit.save()
+                #send to customer success template
+                context = {'amount':amount,
+                        'customer_account_currency':customer_account_currency,
+                        'customer_account_number':customer_account_number,
+                        'accounts':accounts,
+                        'customer_id':customer_id,
+                        }
+                return render(request,"accounts/depositsuccess.html",context)
             
         except ObjectDoesNotExist as ex:
-            messages.info(request,"Account Does Not Exist")
-            context = {}
+            messages.info(request,"Account Does Not Exist",extra_tags="account_error")
+            context = {'customer_id':customer_id}
             return render(request,"accounts/deposit.html",context)
         
-    context = {}
+    context = {'accounts':accounts,'customer_id':customer_id}
     return render(request,"accounts/deposit.html",context)
 
 
@@ -87,7 +97,7 @@ def sendMOney(request,customer_id):
             sender_accountinDB = Account.objects.get(id=sender_account)
             sender_balance = sender_accountinDB.accountBalance
             receiver_accountinDB = Account.objects.get(accountNumber=receiver_account) #fetch receiver account info
-            if (sender_balance < float(amount)):
+            if (sender_balance < round(float(amount),2)):
                 messages.info(request,'Transaction Failed,You have insufficient funds',extra_tags="InsufficientFunds")
                 context = {customer_id:customer_id}
                 return render(request,"accounts/sendmoney.html",context)
@@ -96,20 +106,20 @@ def sendMOney(request,customer_id):
                 context = {'customer_id':customer_id}
                 return render(request,"accounts/sendmoney.html",context)
             else:
-                transactionFees = transactionFee(float(amount))
+                transactionFees = transactionFee(round(float(amount),2))
                 sender_name = customer.name
                 confirmedReceiverAccount = receiver_accountinDB.accountNumber
                 receiverName = receiver_accountinDB.customer_id
                 #grab receiver amount
                 receiverAMount = receiver_accountinDB.accountBalance
                 #update receiver amount
-                new_receiverAmount = float(receiverAMount) + float(amount)
+                new_receiverAmount = float(receiverAMount) + round(float(amount),2)
                 #update receiver account
                 receiver_accountinDB.accountBalance = new_receiverAmount
                 #get the sender account object
                 senderAccountCurrency = sender_accountinDB.currency_id
                 #subtract the sender's balance with new amount
-                newSenderBalance =  sender_balance - float(amount) - transactionFees
+                newSenderBalance =  sender_balance - round(float(amount),2) - transactionFees
                 #update the sender's account balance
                 
                 sender_accountinDB.accountBalance = newSenderBalance
@@ -117,8 +127,8 @@ def sendMOney(request,customer_id):
                 receiver_accountinDB.save()
                 
                 #add transactions
-                senderCashOut = str(senderAccountCurrency) + " " + str(float(amount))+" sent to " +str(receiverName)+ " of account " + str(receiver_accountinDB.accountNumber)
-                receiverCashIn = str(senderAccountCurrency) + " " +str(float(amount))+" received from "+str(sender_name)+ " of account "+ str(sender_accountinDB.accountNumber)
+                senderCashOut = str(senderAccountCurrency) + " " + str(round(float(amount),2))+" sent to " +str(receiverName)+ " of account " + str(receiver_accountinDB.accountNumber)
+                receiverCashIn = str(senderAccountCurrency) + " " +str(round(float(amount),2))+" received from "+str(sender_name)+ " of account "+ str(sender_accountinDB.accountNumber)
                 trasactionSender = Transactions(cashIn='-',cashOut=senderCashOut,transactionFee=transactionFees,balance=newSenderBalance,customer=Customer.objects.get(pk=customer_id))
                 trasactionSender.save()
                 trasactionReceiver = Transactions(cashIn=receiverCashIn,cashOut='-',transactionFee=0,balance=float(new_receiverAmount),customer=Customer.objects.get(pk=receiver_accountinDB.pk))
@@ -169,12 +179,12 @@ def WithdrawMoney(request,customer_id):
         form = request.POST
         customer_account= form['accounts']
         amount = form['amount']
-        transactionFees = transactionFee(float(amount))
+        transactionFees = transactionFee(round(float(amount),2))
         password = form['password']
         #grab customer account object using the account number filled
         account_obj = Account.objects.get(pk=customer_id)
         accountAmount = account_obj.accountBalance
-        if (float(amount) > accountAmount):
+        if (round(float(amount),2) > accountAmount):
             messages.info(request,"Failed, Insufficient Balance ,Please top up ", extra_tags="insuficient_balance")
             context = {'customer_id':customer_id}
             return render(request,"accounts/withdraw.html",context)
@@ -187,10 +197,10 @@ def WithdrawMoney(request,customer_id):
         else:
             customerAccountName = account_obj.customer_id
             account_currency = account_obj.currency_id
-            new_account_balance = accountAmount - float(amount)
+            new_account_balance = accountAmount - round(float(amount),2)
             account_obj.accountBalance = new_account_balance - transactionFees
             account_obj.save()
-            customerCashOut = str(account_currency) + " " + str(float(amount))+ " withdrawn from your account "
+            customerCashOut = str(account_currency) + " " + str(round(float(amount),2))+ " withdrawn from your account "
             trasactionWithdraw = Transactions(cashIn='-',cashOut=customerCashOut,transactionFee=transactionFees,balance=new_account_balance,customer=Customer.objects.get(pk=customer_id))
             trasactionWithdraw.save()
             context = {'customer_id':customer_id,

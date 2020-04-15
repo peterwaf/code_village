@@ -23,7 +23,7 @@
     border:2px solid #0077B2;
     text-align:center;
     cursor:pointer;
-    font-size: 25px;
+    font-size: 22px;
     padding: 15px;
     border-radius: 0px !important;
 }
@@ -34,7 +34,7 @@
     border:2px solid #0077B2;
     text-align:center;
     cursor:pointer;
-    font-size: 25px;
+    font-size: 22px;
     padding: 15px;
     border-radius: 0px !important;
     border-bottom : 2px solid rgba(97, 203, 255, 0.65);
@@ -153,6 +153,7 @@ background-color: #F1F1F1;
             <div class="col-md-4 bg_blur ">
                 <a href="/customerlogin/" class="follow_btn hidden-xs">Logout</a>
             </div>
+            
             <div class="col-md-8  col-xs-12">
                 <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="img-thumbnail picture hidden-xs" />
                 <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg"
@@ -171,10 +172,12 @@ background-color: #F1F1F1;
         <div class="row nav">
             <div class="col-md-4"></div>
             <div class="col-md-12 col-xs-12" style="margin: 0px;padding: 0px;">
-                <div class="col-md-3 col-xs-3 well"> <a href="/transactions/{{customer.id}}/">Transactions</a></div>
-                <div class="col-md-3 col-xs-3 well"> <a href="balance/{{customer.id}}/">Check Balance</a></div>
-                <div class="col-md-3 col-xs-3 well"> <a href="/sendmoney/{{customer.id}}/">Send Money</a></div>
+                <div class="col-md-2 col-xs-2 well"> <a href="/transactions/{{customer.id}}/">Transactions</a></div>
                 <div class="col-md-3 col-xs-3 well"><a href="/withdraw/{{customer.id}}/">Withdraw Money</a></div>
+                <div class="col-md-2 col-xs-2 well"> <a href="/deposit/{{customer.id}}/">Deposit Money</a></div>
+                <div class="col-md-2 col-xs-2 well"> <a href="balance/{{customer.id}}/">Check Balance</a></div>
+                <div class="col-md-3 col-xs-3 well"> <a href="/sendmoney/{{customer.id}}/">Send Money</a></div>
+                
             </div>
         </div>
     </div>
