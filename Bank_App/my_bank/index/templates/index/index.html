@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome to Peter's Bank</h1>
-    
+{% extends 'base/container_page.html' %}
+   
+{% block content %}
     <ul>
-        <li><a href="{% url 'customer:customers' %}">Customers</a></li>
+        <li><a href="{% url 'customer:customers' %}" style="color:blue">Customers</a></li>
         <li> <a href="{% url 'accounts:accounts' %}">Accounts</a></li>
         <li> <a href="{% url 'customer:add_customer' %}">Add Customer</a></li>
         <li> <a href="{% url 'accounts:add_account' %}">Add Account</a></li>
     </ul>
-</body>
-</html>
+
+{% endblock %}
+
+
+
