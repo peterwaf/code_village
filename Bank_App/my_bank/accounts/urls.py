@@ -11,4 +11,5 @@ urlpatterns = [
     path('transactions/<int:customer_id>/',views.ShowTransactions,name="transactions"),
     path('deposit/<int:customer_id>/',views.DepositMoney,name="deposit"),
     
+    
 ]

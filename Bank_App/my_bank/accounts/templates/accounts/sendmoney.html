@@ -1,46 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Money</title>
-    <style>
-        .main{
- 	padding: 40px 0;
-}
-.main input,
-.main input::-webkit-input-placeholder {
-    font-size: 11px;
-    padding-top: 3px;
-}
-.main-center{
- 	margin-top: 30px;
- 	margin: 0 auto;
- 	max-width: 400px;
-    padding: 10px 40px;
-	background:#009edf;
-	    color: #FFF;
-    text-shadow: none;
-	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
--moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+{% extends 'base/page_container.html' %}
 
-}
-span.input-group-addon i {
-    color: #009edf;
-    font-size: 17px;
-}
+{% block content %}
+<div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Send Money</h6>
 
-    </style>
-</head>
-<body>
-<div class="container">
-<div class="main">
-    <div class="main-center">
+    </div>
+</div>
+
+<div class="main container-fluid">
+    <div class="main-center container">
+        
         <h5>Please fill in below details</h5>
         <form class="" method="post" action="">
             {% csrf_token %}
@@ -55,7 +26,7 @@ span.input-group-addon i {
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                      
                             <input type="number" class="form-control" name="amount" placeholder="Enter Amount" />
                         </div>
                     </div>
@@ -64,7 +35,7 @@ span.input-group-addon i {
             <div class="form-group">
                 <label for="username">To :</label>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                  
                     <input type="number" class="form-control" name="receiverAccount" placeholder="Enter Receiver Account" />
                 </div>
             </div>
@@ -72,13 +43,13 @@ span.input-group-addon i {
             <div class="form-group">
                 <label for="password">Pin</label>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  
                     <input type="password" class="form-control" name="password" placeholder="Enter Pin" />
                 </div>
             </div>
 
             <button type="submit">SUBMIT</button>
-        <a href="/profile/{{customer_id}}" style="color:#fff;">Go Back</a>
+        <a href="/profile/{{customer_id}}" style="color:#fff;">Try again</a>
         {% for message in messages %}
         {% if "receiver_Account" in message.tags %}
         <p> {{message}} </p> {# show receiver account error message #}
@@ -99,10 +70,5 @@ span.input-group-addon i {
     </div>
     <!--main-center"-->
 </div>
-<!--main-->
-</div>
 
-
-
-</body>
-</html>
+{% endblock %}

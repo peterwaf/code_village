@@ -43,12 +43,12 @@ def DepositMoney(request,customer_id):
             #grab customer account from the DB
             customer_account_object = Account.objects.get(pk=account)
             if (pin != customer_pin):
-                messages.info(request,'You have entered a Wrong Pin,Please Go Bank and Try again',extra_tags="pin_error")
-                context = {'customer_id':customer_id}
+                messages.info(request,'You have entered a Wrong Pin,Try again.Go to My Money>Deposit Money',extra_tags="pin_error")
+                context = {'customer_id':customer_id,'customer':customer,}
                 return render(request,"accounts/deposit.html",context)
             
             else:
-                
+                customer = Customer.objects.get(pk=customer_id)
                 customer_account_number = customer_account_object.accountNumber
                 customer_account_balance = customer_account_object.accountBalance
                 new_customer_account_amount = customer_account_balance + round(float(amount),2)
@@ -67,20 +67,23 @@ def DepositMoney(request,customer_id):
                         'customer_account_number':customer_account_number,
                         'accounts':accounts,
                         'customer_id':customer_id,
+                        'customer':customer
                         }
                 return render(request,"accounts/depositsuccess.html",context)
             
         except ObjectDoesNotExist as ex:
             messages.info(request,"Account Does Not Exist",extra_tags="account_error")
-            context = {'customer_id':customer_id}
+            customer = Customer.objects.get(pk=customer_id)
+            context = {'customer_id':customer_id,'customer':customer,}
             return render(request,"accounts/deposit.html",context)
         
-    context = {'accounts':accounts,'customer_id':customer_id}
+    context = {'accounts':accounts,'customer_id':customer_id,'customer':customer,}
     return render(request,"accounts/deposit.html",context)
 
 
 def SendSuccessful(request):
-    context = {}
+    customer = Customer.objects.get(pk=customer_id)
+    context = {'customer':customer}
     return render(request,"accounts/send_success.html",context)
 
 
@@ -99,13 +102,14 @@ def sendMOney(request,customer_id):
             receiver_accountinDB = Account.objects.get(accountNumber=receiver_account) #fetch receiver account info
             if (sender_balance < round(float(amount),2)):
                 messages.info(request,'Transaction Failed,You have insufficient funds',extra_tags="InsufficientFunds")
-                context = {customer_id:customer_id}
+                context = {customer_id:customer_id,'customer':customer,}
                 return render(request,"accounts/sendmoney.html",context)
             elif (customer.pin != pin):
-                messages.info(request,'You have entered a Wrong Pin,Please Go Bank and Try again',extra_tags="pin_error")
-                context = {'customer_id':customer_id}
+                messages.info(request,'You have entered a Wrong Pin,Please Try again',extra_tags="pin_error")
+                context = {'customer_id':customer_id,'customer':customer}
                 return render(request,"accounts/sendmoney.html",context)
             else:
+                customer = Customer.objects.get(pk=customer_id)
                 transactionFees = transactionFee(round(float(amount),2))
                 sender_name = customer.name
                 confirmedReceiverAccount = receiver_accountinDB.accountNumber
@@ -119,7 +123,7 @@ def sendMOney(request,customer_id):
                 #get the sender account object
                 senderAccountCurrency = sender_accountinDB.currency_id
                 #subtract the sender's balance with new amount
-                newSenderBalance =  sender_balance - round(float(amount),2) - transactionFees
+                newSenderBalance =  round(float(sender_balance),2) - round(float(amount),2) - transactionFees
                 #update the sender's account balance
                 
                 sender_accountinDB.accountBalance = newSenderBalance
@@ -141,18 +145,23 @@ def sendMOney(request,customer_id):
                         'sender_name':sender_name,
                         'receiverName':receiverName,
                         'senderAccountCurrency':senderAccountCurrency,
-                        'customer_id':customer_id
+                        'customer_id':customer_id,
+                        'customer':customer,
                         }
                 return render(request,"accounts/send_success.html",context)
         
         except ObjectDoesNotExist as ex:
-            messages.info(request,'Account Does Not Exist,Please go back and fill the details',extra_tags="receiver_Account")
-            context = {'customer_id':customer_id}
+            customer = Customer.objects.get(pk=customer_id)
+            messages.info(request,'Account Does Not Exist,Please try again',extra_tags="receiver_Account")
+            context = {'customer_id':customer_id,'customer':customer,}
             return render(request,"accounts/sendmoney.html",context)
-        
+    
+    customer = Customer.objects.get(pk=customer_id)
     context = {
         'accounts':accounts,
-        'customer_id':customer_id
+        'customer_id':customer_id,
+        'customer':customer,
+        
         }
     return render(request,"accounts/sendmoney.html",context)
 
@@ -166,8 +175,9 @@ def CheckBalance(request,customer_id):
         bal = account_info.accountBalance #change global variable
         context = {'accounts':accounts,'bal':bal,'customer_id':customer_id,'account_info':account_info}
         return render(request,"accounts/account_info.html",context)
-        
-    context = {'accounts':accounts,'customer_id':customer_id}
+    
+    customer = Customer.objects.get(pk=customer_id)
+    context = {'accounts':accounts,'customer_id':customer_id,'customer':customer}
     return render(request,"accounts/balance.html",context)
 
 
@@ -186,18 +196,19 @@ def WithdrawMoney(request,customer_id):
         accountAmount = account_obj.accountBalance
         if (round(float(amount),2) > accountAmount):
             messages.info(request,"Failed, Insufficient Balance ,Please top up ", extra_tags="insuficient_balance")
-            context = {'customer_id':customer_id}
+            context = {'customer_id':customer_id,'customer':customer,}
             return render(request,"accounts/withdraw.html",context)
         
         elif (customer.pin != password):
             messages.info(request,"Wrong Pin, Please go back and try again", extra_tags="wrong_pin")
-            context = {'customer_id':customer_id}
+            context = {'customer_id':customer_id,'customer':customer}
             return render(request,"accounts/withdraw.html",context)
         
         else:
+            customer = Customer.objects.get(pk=customer_id)
             customerAccountName = account_obj.customer_id
             account_currency = account_obj.currency_id
-            new_account_balance = accountAmount - round(float(amount),2)
+            new_account_balance = round(float(accountAmount),2) - round(float(amount),2)
             account_obj.accountBalance = new_account_balance - transactionFees
             account_obj.save()
             customerCashOut = str(account_currency) + " " + str(round(float(amount),2))+ " withdrawn from your account "
@@ -209,16 +220,18 @@ def WithdrawMoney(request,customer_id):
                     'accountAmount':accountAmount,
                     'customerAccountName':customerAccountName,
                     'new_account_balance':new_account_balance,
-                    'amount':amount
+                    'amount':amount,
+                    'customer':customer,
                     
             }
             return render(request,"accounts/withdraw_report.html",context)
         
-    context = {'accounts':accounts,'customer_id':customer_id
+    context = {'accounts':accounts,'customer_id':customer_id,'customer':customer,
         }
     return render(request,"accounts/withdraw.html",context)
 
 def ShowTransactions(request,customer_id):
     customertransactions = Transactions.objects.filter(customer=Customer.objects.get(pk=customer_id))
-    context = {'customer_id':customer_id,'customertransactions':customertransactions}
+    customer = Customer.objects.get(pk=customer_id)
+    context = {'customer_id':customer_id,'customertransactions':customertransactions,'customer':customer,}
     return render(request,'accounts/transactions.html',context)
