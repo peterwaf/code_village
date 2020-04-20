@@ -6,6 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from transactions.models import Transactions
+from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template import Context
+from django.template.loader import render_to_string
 # Create your views here.
 
 def transactionFee(amount):
@@ -173,7 +179,8 @@ def CheckBalance(request,customer_id):
         account_id = form['account'] #grab the account id
         account_info = Account.objects.get(id=account_id) #grab the pk
         bal = account_info.accountBalance #change global variable
-        context = {'accounts':accounts,'bal':bal,'customer_id':customer_id,'account_info':account_info}
+        customer = Customer.objects.get(pk=customer_id)
+        context = {'accounts':accounts,'bal':bal,'customer_id':customer_id,'account_info':account_info,'customer':customer}
         return render(request,"accounts/account_info.html",context)
     
     customer = Customer.objects.get(pk=customer_id)
@@ -235,3 +242,29 @@ def ShowTransactions(request,customer_id):
     customer = Customer.objects.get(pk=customer_id)
     context = {'customer_id':customer_id,'customertransactions':customertransactions,'customer':customer,}
     return render(request,'accounts/transactions.html',context)
+
+def SendMail(request,customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customertransactions = Transactions.objects.filter(customer=Customer.objects.get(pk=customer_id))
+    if request.method == "POST":
+        form = request.POST
+        email = form['email']
+        plaintext_context = Context(autoescape=False)  # HTML escaping not appropriate in plaintext
+        subject = 'Transaction Statement'
+        html_body = render_to_string("accounts/mailer_template.html",{'customertransactions':customertransactions})
+        msg = EmailMultiAlternatives(subject=subject, from_email=email,
+                                    to=["peterwafulah@gmail.com"], body=html_body)
+        msg.attach_alternative(html_body, "text/html")
+        msg.send()
+        context = {'customer':customer,'email':email}
+        return render(request,"accounts/statement_success.html",context)
+        """
+        send_mail('Test Mesage',
+                  'Here is the message.',
+                  'peterwafulah@gmail.com',
+                   [email],
+                  fail_silently=False,
+                  )
+        """
+    context = {'customer':customer}
+    return render(request,'accounts/mailform.html',context)

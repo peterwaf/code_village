@@ -10,6 +10,7 @@ urlpatterns = [
     path('withdraw/<int:customer_id>/',views.WithdrawMoney,name="withdraw"),
     path('transactions/<int:customer_id>/',views.ShowTransactions,name="transactions"),
     path('deposit/<int:customer_id>/',views.DepositMoney,name="deposit"),
+    path('sendemail/<int:customer_id>/',views.SendMail,name="email"),
     
     
 ]

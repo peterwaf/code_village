@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+</head>
+<body>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Credit</th>
+                <th scope="col">Debit</th>
+                <th scope="col">Transaction Fees</th>
+                <th scope="col">Outstanding Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in customertransactions %}
+            <tr>
+                <td>{{transaction.date}}</td>
+                <td>{{transaction.cashIn}}</td>
+                <td>{{transaction.cashOut}}</td>
+                <td>{{transaction.transactionFee}}</td>
+                <td>{{transaction.balance}}</td>
+            </tr>
+            {% endfor %}
+    
+    
+        </tbody>
+    </table>
+
+</body>
+</html>
