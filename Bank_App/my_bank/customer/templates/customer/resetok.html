@@ -9,20 +9,24 @@
     <!------ Include the above in your HEAD tag ---------->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Login</title>
+    <title>Password Reset</title>
 </head>
 
 <body>
 
     <div class="login-wrap">
         <div class="login-html">
-           <H1>Welcome to the Pan African Peter's Bank</H1>
-<p><a href="{% url 'customer:customerlogin' %}" style="color: brown;">Customer Login</a></p>
-<p><a href="{% url 'customer:stafflogin' %}">Staff Login</a></p>
+            {% for message in messages %}
+            {{message}}
+            {% endfor %}
+            <p style="color:cornsilk"><a href="{% url 'customer:customerlogin' %}">Click here to Login</a> </p>
+        </div>
+
+        
+
+
     </div>
 
     </div>
 
 </body>
-
-

@@ -1,16 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Customer</title>
-</head>
-<body>
-    <form action="{% url 'customer:add_customer' %}" method="POST" name="">
-    {% csrf_token %}
-    {{form.as_p}}
 
-<button type="Submit" name="submit">Submit</button>
-    </form>
-</body>
-</html>
+{% extends 'base/admin_page_container.html' %}
+{% block content%}
+<div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Add Customer</h6>
+
+    </div>
+</div>
+<div class="main">
+    <div class="main-center">
+        <h5>Please fill in below details</h5>
+        <form action="{% url 'customer:add_customer' %}" method="POST" name="">
+            {% csrf_token %}
+            <div class="form-group">
+
+                <div class="form-group">
+                    {{form.name.label}}
+                    <div class="input-group">
+
+                        {{form.name}}
+                    </div>
+                </div>
+
+            <div class="form-group">
+                {{form.idNumber.label}}
+                <div class="input-group">
+            
+                    {{form.idNumber}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{form.uniqueID.label}}
+                <div class="input-group">
+            
+                    {{form.uniqueID}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{form.mobileNo.label}}
+                <div class="input-group">
+            
+                    {{form.mobileNo}}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                {{form.pin.label}}
+                <div class="input-group">
+            
+                    {{form.pin}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{form.user.label}}
+                <div class="input-group">
+            
+                    {{form.user}}
+                </div>
+            </div>
+
+            <button type="Submit" name="submit">Submit</button>
+             
+
+        </form>
+    </div>
+    <!--main-center"-->
+</div>
+{% endblock %}
+
+
+    
+    
+

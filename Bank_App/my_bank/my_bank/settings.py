@@ -41,8 +41,12 @@ INSTALLED_APPS = [
     'currency',
     'customer',
     'index',
-    'transactions'
+    'transactions',
+    'user',
 ]
+
+AUTH_USER_MODEL = 'user.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST':'localhost',
         'PORT':3306,
-        'NAME':'Bank_App',
+        'NAME':'banking_app',
         'USER':'root',
         'PASSWORD':'pishpan88'
     }

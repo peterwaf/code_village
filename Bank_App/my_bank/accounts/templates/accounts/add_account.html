@@ -1,16 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Account</title>
-</head>
-<body>
+{% extends 'base/admin_page_container.html' %}
+{% block content%}
+<div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Add Account</h6>
+
+    </div>
+</div>
+<div class="main">
+    <div class="main-center">
+        <h5>Please fill in below details</h5>
+        <form action="{% url 'accounts:add_account' %}" method="POST" name="frm_customers">
+            {% csrf_token %}
+            <div class="form-group">
+
+                <div class="form-group">
+                    {{form.accountNumber.label}}
+                    <div class="input-group">
+
+                        {{form.accountNumber}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{form.accountType.label}}
+                    <div class="input-group">
+
+                        {{form.accountType}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{form.accountBalance.label}}
+                    <div class="input-group">
+
+                        {{form.accountBalance}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{form.customer_id.label}}
+                    <div class="input-group">
+
+                        {{form.customer_id}}
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    {{form.currency_id.label}}
+                    <div class="input-group">
+
+                        {{form.currency_id}}
+                    </div>
+                </div>
+
+                <button type="Submit" name="submit">Submit</button>
+
+
+        </form>
+    </div>
+    <!--main-center"-->
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <form action="{% url 'accounts:add_account' %}" method="POST" name="frm_customers">
     {% csrf_token %}
     {{form.as_p}}
 
 <button type="Submit" name="submit">Submit</button>
-    </form>
-</body>
-</html>

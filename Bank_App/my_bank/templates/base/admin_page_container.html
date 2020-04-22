@@ -1,21 +1,21 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <title>Customer Dashboard</title>
+    <title>Customer Dashboard</title>
     <link rel="stylesheet" href="{% static 'site/bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'site/custom/css/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'site/custom/css/all.min.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
     <link rel="stylesheet" href="{% static 'site/custom/css/sb-admin-2.min.css' %}">
     <link rel="stylesheet" href="{% static 'site/custom/css/inner_content.css' %}">
 </head>
@@ -51,49 +51,36 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Money Centre
+                Customer Management
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-         
+
             <!-- Nav Item - Utilities Collapse Menu -->
-           
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-           
+
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>My Money</span>
+                    <span>Manage Customers</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/sendmoney/{{customer.id}}/">Send Money</a>
-                        <a class="collapse-item" href="/withdraw/{{customer.id}}/">Withdraw Money</a>
-                        <a class="collapse-item" href="/deposit/{{customer.id}}/">Deposit Money</a>
+                        <a class="collapse-item" href="{% url 'customer:add_customer' %}">Add Customer</a>
+                        <a class="collapse-item" href="{% url 'accounts:add_account' %}">Add Account</a>
                        
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="/transactions/{{customer.id}}/">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Transactions</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="/profile/balance/{{customer.id}}/">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Check Balance</span></a>
-            </li>
-
-
+            
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -101,7 +88,6 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -146,23 +132,25 @@
                             </div>
                         </li>
 
-                    
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello , {{request.user.username}}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello ,
+                                    {{request.user.username}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                
+
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/customerlogin/"  data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/customerlogin/" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -180,7 +168,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                       
+
                     </div>
 
                     <!-- Content Row -->
@@ -193,8 +181,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                ID Number</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{customer.idNumber}}</div>
+                                                First Name</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{request.user.first_name}}
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-address-card fa-2x text-gray-300"></i>
@@ -211,8 +200,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Phone Number </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{customer.mobileNo}}</div>
+                                                Last Name</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{request.user.last_name}}
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-mobile fa-2x text-gray-300"></i>
@@ -228,11 +218,12 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"> Banking ID
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"> User ID
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{customer.uniqueID}}</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        {{request.user.id}}</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -251,7 +242,7 @@
                             </div>
                         </div>
 
-                       
+
                     </div>
 
                     <!-- Content Row -->
@@ -260,39 +251,37 @@
 
                         <!-- Area Chart -->
                         <div class="col-xl-12 col-lg-12">
-                            
+
                             <div class="col-xl-12 col-lg-12 card-header">
-                            {% block content %}
-                            {% endblock %}
+                                {% block content %}
+                                {% endblock %}
 
 
-                            </div>
                             </div>
                         </div>
-
-                        
-
-                       
-                    
                     </div>
-                </div>
-                <!-- /.container-fluid -->
 
+                </div>
+
+                </div>
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->

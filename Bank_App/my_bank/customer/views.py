@@ -26,33 +26,30 @@ def customer_Account_Details(request,cust_id):
 def addCustomer(request):
     #save imported form
     form = CustomerForm(request.POST or None,request.FILES or None)
-
     #if form is valid
-    
     if form.is_valid():
         form.save()
-        return redirect('customer:customers')
-        #save if the form is valid
         #redirect to the list of customers
     context = {'form':form}
     return render(request,"customer/add_customer.html",context)
 
 #admin login
-"""
-def logIn(request):
+
+def StafflogIn(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
-            return redirect('index:home')
+            
+            context = {}
+            return render(request,"customer/adminpage.html",context)
         else:
             messages.info(request,'Invalid Username or Password')
-         
     context = {}
     return render(request,"customer/login.html",context)
-"""
+
 #admin register
 """
 def Register(request):
@@ -109,6 +106,30 @@ def CustomerLogin(request):
             
     context = {}
     return render(request,"customer/customer_login.html",context)
+
+def passwordReset(request):
+    if request.method == "POST":
+        form = request.POST
+        number = form['mobileNo']
+        access = form['pin']
+        
+        try:
+            #try will pick only if the object does not exist
+            customer_info = Customer.objects.get(mobileNo=number)
+            new_pin = access
+            customer_info.pin = new_pin
+            customer_info.save()
+            messages.info(request,'Your Pin has been set successfully')
+            context = {}
+            return render(request,"customer/resetok.html",context)
+                
+        except ObjectDoesNotExist as ex:
+            messages.info(request,'Invalid Phone Number')
+            context = {}
+            return render(request,"customer/customer_login.html",context)
+    context = {}
+    return render(request,"customer/passwordreset.html",context)
+
 
 
 
