@@ -88,22 +88,15 @@ def customerProfile(request,customer_id):
 def CustomerLogin(request):
     if request.method == "POST":
         form = request.POST
-        number = form['mobileNo']
-        access = form['pin']
-        
-        try:
-            #try will pick only if the object does not exist
-            customer_info = Customer.objects.get(mobileNo=number)
-            
-            if (customer_info.pin == access):
-                return redirect('customer:customer_profile',customer_info.id)
-            else:
-                messages.info(request,'Incorrect Pin')
-                
-        except ObjectDoesNotExist as ex:
-            messages.info(request,'Invalid Phone Number')
-            context = {}
-            return render(request,"customer/customer_login.html",context)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username,password=password)
+        if user is not None:
+            login(request,user)
+            customer_info = Customer.objects.get(user=user.pk)
+            return redirect('customer:customer_profile',customer_info.id)
+        else:
+            messages.info(request,'Invalid Username or Password')
             
     context = {}
     return render(request,"customer/customer_login.html",context)
