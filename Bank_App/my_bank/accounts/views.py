@@ -31,6 +31,8 @@ def AddCustomerAccounts(request):
     if form.is_valid():
         form.save()
         messages.info(request,'Account Successfully Added')
+    else:
+        print('Not Available')
     context = {'form':form}
     
     return render(request,"accounts/add_account.html",context)
