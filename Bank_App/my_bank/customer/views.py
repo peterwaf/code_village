@@ -29,6 +29,7 @@ def addCustomer(request):
     #if form is valid
     if form.is_valid():
         form.save()
+        messages.info(request,'Customer Successfuly Added')
         #redirect to the list of customers
     context = {'form':form}
     return render(request,"customer/add_customer.html",context)
@@ -42,7 +43,6 @@ def StafflogIn(request):
         user = authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
-            
             context = {}
             return render(request,"customer/adminpage.html",context)
         else:
@@ -50,8 +50,8 @@ def StafflogIn(request):
     context = {}
     return render(request,"customer/login.html",context)
 
-#admin register
-"""
+#user register
+
 def Register(request):
     form = CreateUserForm()
     if request.method == "POST":
@@ -60,9 +60,10 @@ def Register(request):
             form.save()
             user = form.cleaned_data.get('username')
             messages.success(request,'Account Successfuly Created For {}'.format(user))
+            return redirect('customer:customerlogin')
     context = {'form':form}
     return render(request,"customer/register.html",context)
-"""
+
 
 #admin logout
 """

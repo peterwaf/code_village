@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 #import form class from django
 from django import forms
 #import customer model
-from django.contrib.auth.models import User
+from user.models import CustomUser
 #create formclass for customer
 
 class CustomerForm(forms.ModelForm):
@@ -16,5 +16,5 @@ class CreateUserForm(UserCreationForm):
     
     #meta class
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username','email','password1','password2']

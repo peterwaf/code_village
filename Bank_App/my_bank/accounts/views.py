@@ -30,7 +30,7 @@ def AddCustomerAccounts(request):
     form = AccountForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('accounts:accounts') #redirect to the list of customer accounts
+        messages.info(request,'Account Successfully Added')
     context = {'form':form}
     
     return render(request,"accounts/add_account.html",context)

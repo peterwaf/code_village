@@ -30,6 +30,6 @@ urlpatterns = [
     path('profile/<int:customer_id>',views.customerProfile,name='customer_profile'),
     path('reset/',views.passwordReset,name='reset'),
     path('staff/',views.StafflogIn,name='stafflogin'),
-    
+    path('register/',views.Register,name='register'),
 ]
 
