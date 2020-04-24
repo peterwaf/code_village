@@ -26,7 +26,7 @@ def show_accounts(request):
         }
     return render(request,"accounts/customer_accounts.html",context)
 
-
+@login_required(login_url='customer:stafflogin')
 def AddCustomerAccounts(request):
     form = AccountForm(request.POST or None)
     if form.is_valid():
@@ -265,6 +265,7 @@ def SendMail(request,customer_id):
         msg.send()
         context = {'customer':customer,'email':email}
         return render(request,"accounts/statement_success.html",context)
+       
         """
         send_mail('Test Mesage',
                   'Here is the message.',

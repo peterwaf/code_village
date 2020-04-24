@@ -22,7 +22,7 @@ def customer_Account_Details(request,cust_id):
     context = {'customer_account_info':customer_account_info}
     return render(request,"customer/customer_account.html",context)
 
-
+@login_required(login_url='customer:stafflogin')
 def addCustomer(request):
     #save imported form
     form = CustomerForm(request.POST or None,request.FILES or None)
@@ -37,6 +37,9 @@ def addCustomer(request):
 #admin login
 
 def StafflogIn(request):
+    if request.user.is_authenticated:
+        return render(request,"customer/adminpage.html")
+    
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
