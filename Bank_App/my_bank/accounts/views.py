@@ -26,6 +26,7 @@ def show_accounts(request):
         }
     return render(request,"accounts/customer_accounts.html",context)
 
+
 def AddCustomerAccounts(request):
     form = AccountForm(request.POST or None)
     if form.is_valid():
@@ -37,6 +38,7 @@ def AddCustomerAccounts(request):
     
     return render(request,"accounts/add_account.html",context)
 
+@login_required(login_url='customer:customerlogin')
 def DepositMoney(request,customer_id):
     customer = Customer.objects.get(pk=customer_id)
     customer_pin = customer.pin
@@ -94,7 +96,7 @@ def SendSuccessful(request):
     context = {'customer':customer}
     return render(request,"accounts/send_success.html",context)
 
-
+@login_required(login_url='customer:customerlogin')
 def sendMOney(request,customer_id):
     accounts = Account.objects.filter(customer_id=customer_id)
     if request.method == "POST":
@@ -173,6 +175,7 @@ def sendMOney(request,customer_id):
         }
     return render(request,"accounts/sendmoney.html",context)
 
+@login_required(login_url='customer:customerlogin')
 def CheckBalance(request,customer_id):
     accounts = Account.objects.filter(customer_id=customer_id) #grab all customer accounts and filter
     bal = 0 #global variable
@@ -190,7 +193,7 @@ def CheckBalance(request,customer_id):
     return render(request,"accounts/balance.html",context)
 
 
-
+@login_required(login_url='customer:customerlogin')
 def WithdrawMoney(request,customer_id):
     accounts  = Account.objects.filter(customer_id=customer_id)
     customer = Customer.objects.get(pk=customer_id)
@@ -239,12 +242,14 @@ def WithdrawMoney(request,customer_id):
         }
     return render(request,"accounts/withdraw.html",context)
 
+@login_required(login_url='customer:customerlogin')
 def ShowTransactions(request,customer_id):
     customertransactions = Transactions.objects.filter(customer=Customer.objects.get(pk=customer_id))
     customer = Customer.objects.get(pk=customer_id)
     context = {'customer_id':customer_id,'customertransactions':customertransactions,'customer':customer,}
     return render(request,'accounts/transactions.html',context)
 
+@login_required(login_url='customer:customerlogin')
 def SendMail(request,customer_id):
     customer = Customer.objects.get(pk=customer_id)
     customertransactions = Transactions.objects.filter(customer=Customer.objects.get(pk=customer_id))

@@ -65,12 +65,12 @@ def Register(request):
     return render(request,"customer/register.html",context)
 
 
-#admin logout
-"""
+#logout
+
 def Logout(request):
     logout(request)
-    redirect('customer:login')
-"""
+    return redirect('customer:customerlogin')
+
 
 def customer_Account_Details(request,cust_id):
     customer_account_info = Account.objects.filter(customer_id=cust_id)
@@ -86,6 +86,12 @@ def customerProfile(request,customer_id):
 
 
 def CustomerLogin(request):
+    #if the user is authenticated , redirect them to the profile
+    if request.user.is_authenticated:
+        #grab customer id using the current user
+        customer = Customer.objects.get(user=request.user.pk)
+        return redirect('customer:customer_profile',customer.pk)
+    
     if request.method == "POST":
         form = request.POST
         username = request.POST.get('username')
