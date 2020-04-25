@@ -62,8 +62,7 @@ def Register(request):
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')
-            messages.success(request,'Account Successfuly Created For {}'.format(user))
-            return redirect('customer:customerlogin')
+            messages.success(request,'Account Successfuly Created For {} Please contact your bank for more info'.format(user))
     context = {'form':form}
     return render(request,"customer/register.html",context)
 
@@ -90,10 +89,12 @@ def customerProfile(request,customer_id):
 
 def CustomerLogin(request):
     #if the user is authenticated , redirect them to the profile
+  
     if request.user.is_authenticated:
         #grab customer id using the current user
         customer = Customer.objects.get(user=request.user.pk)
         return redirect('customer:customer_profile',customer.pk)
+
     
     if request.method == "POST":
         form = request.POST
