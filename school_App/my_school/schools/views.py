@@ -26,7 +26,7 @@ def add(request):
         school.no_of_students = form['noOfStudents']
         school.save() #save the details in the database
         
-        return redirect('schools:schools') #grab the id of the inserted school
+        return redirect('schools:schools') #redirect to schools list
     
 
     context = {}
