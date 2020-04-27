@@ -89,11 +89,14 @@ def customerProfile(request,customer_id):
 
 def CustomerLogin(request):
     #if the user is authenticated , redirect them to the profile
+    if request.user.is_staff:
+        return redirect('customer:stafflogin')
   
     if request.user.is_authenticated:
         #grab customer id using the current user
         customer = Customer.objects.get(user=request.user.pk)
         return redirect('customer:customer_profile',customer.pk)
+    
 
     
     if request.method == "POST":

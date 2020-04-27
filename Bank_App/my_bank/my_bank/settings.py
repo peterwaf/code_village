@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'user',
 ]
 
+#tell django that we have created a custom user model
+
 AUTH_USER_MODEL = 'user.CustomUser'
 
 
